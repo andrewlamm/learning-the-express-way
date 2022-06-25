@@ -1,20 +1,31 @@
 /** @jsx jsx */
 
 import { useState } from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
+import { graphql, useStaticQuery, Link } from 'gatsby'
 import { jsx, Box, Flex, Button } from 'theme-ui'
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 
 const Header = ({ ...props }) => {
   const {
-    allLessonListYaml: { nodes: lessons }
+    allLessonListYaml: { nodes: lessons },
+    allMdx: { edges: lessonslug }
   } = useStaticQuery(
     graphql`
       query LessonList {
-        allLessonListYaml(sort: { fields: title }) {
+        allLessonListYaml {
           nodes {
             title
-            link
+            extraLessson
+          }
+        }
+        allMdx {
+          edges {
+            node {
+              frontmatter {
+                slug
+                title
+              }
+            }
           }
         }
       }
@@ -23,6 +34,12 @@ const Header = ({ ...props }) => {
 
   const [dropdown, setDropdown] = useState(false)
   const [focused, setFocused] = useState(false)
+
+  const titleToLink = {}
+
+  lessonslug.forEach(lesson => {
+    titleToLink[lesson.node.frontmatter.title] = lesson.node.frontmatter.slug
+  })
 
   return (
     <Flex
@@ -38,8 +55,6 @@ const Header = ({ ...props }) => {
       }}
     >
       <Box
-        as='a'
-        href='/'
         sx={{
           fontSize: 6,
           color: 'primary',
@@ -48,13 +63,28 @@ const Header = ({ ...props }) => {
           textDecoration: 'none',
         }}
       >
-        Learning the Express Way
+        <Link
+          to='/'
+          sx={{
+            color: 'primary',
+            textDecoration: 'none',
+          }}
+        >
+          Learning the Express Way
+        </Link>
       </Box>
       <Box
         sx={{
           position: 'relative',
           flexGrow: '1',
         }}
+        onFocus={ () => setFocused(true) }
+        onBlur={ (event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setFocused(false)
+            setDropdown(false)
+          }
+        } }
       >
         <Button
           sx={{
@@ -66,8 +96,6 @@ const Header = ({ ...props }) => {
             cursor: 'pointer',
           }}
           onClick={ () => setDropdown(!dropdown) }
-          onFocus={ () => setFocused(true) }
-          onBlur={ () => { setFocused(false); setDropdown(false) } }
         >
           Lessons
           {!dropdown && <FaCaretDown size='1.2rem' sx={{paddingLeft: 2}} />}
@@ -91,8 +119,6 @@ const Header = ({ ...props }) => {
           {lessons.map((lesson, i) => (
             <Box
               key={i}
-              as='a'
-              href={lesson.link}
               sx={{
                 display: 'block',
                 textDecoration: 'none',
@@ -107,7 +133,15 @@ const Header = ({ ...props }) => {
                 fontSize: 3,
               }}
             >
-              {lesson.title}
+              <Link
+                to={titleToLink[lesson.title]}
+                sx={{
+                  textDecoration: 'none',
+                  color: '#000000',
+                }}
+              >
+                Lesson {lesson.extraLessson ? 'EX' : i+1}: {lesson.title}
+              </Link>
             </Box>
           ))}
         </Box>

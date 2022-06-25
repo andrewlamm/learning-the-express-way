@@ -16,7 +16,7 @@ const IndexPage = () => {
       <Seo />
       <Header />
       <Box>
-        andrew fucking sucks
+        poggies
       </Box>
     </Box>
   )

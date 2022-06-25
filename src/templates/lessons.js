@@ -1,16 +1,18 @@
 /** @jsx jsx */
 
-import { jsx, Flex, Box } from 'theme-ui'
+import { jsx, Flex, Box, Heading } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import Seo from '../components/helmet'
 import Header from '../components/header'
+import TableOfContents from '../components/toc'
 
 const LessonPage = ({ data: { mdx: post } }) => {
   const {
-    frontmatter: { title, slug },
+    frontmatter: { title },
     body,
+    tableOfContents: { items: toc }
   } = post
 
   return (
@@ -22,13 +24,28 @@ const LessonPage = ({ data: { mdx: post } }) => {
     >
       <Seo />
       <Header />
-      <Box
+      <Flex
         sx={{
           px: 3,
         }}
       >
-        <MDXRenderer>{body}</MDXRenderer>
-      </Box>
+        <Box
+          sx={{
+            paddingTop: 2,
+            width: '20%',
+            flexDirection: 'row',
+          }}
+        >
+          <TableOfContents items={toc} lessonTitle={title} />
+        </Box>
+        <Box
+          sx={{
+            width: '80%'
+          }}
+        >
+          <MDXRenderer>{body}</MDXRenderer>
+        </Box>
+      </Flex>
     </Box>
   )
 }
@@ -36,12 +53,13 @@ const LessonPage = ({ data: { mdx: post } }) => {
 export default LessonPage
 
 export const query = graphql`
-  query Lessons {
-    mdx {
+  query Lessons($path: String!) {
+    mdx(frontmatter: { slug: { eq: $path } }) {
       frontmatter {
         title
       }
       body
+      tableOfContents(maxDepth: 2)
     }
   }
 `
