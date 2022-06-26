@@ -2,7 +2,7 @@ const path = require('path')
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
-  const lessonTemplate = path.resolve('src/templates/lessons.js')
+  const lessonTemplate = path.resolve('./src/templates/lessons.js')
 
   const lessons = await graphql(`
     query Lessons {

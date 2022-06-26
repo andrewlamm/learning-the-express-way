@@ -53,7 +53,7 @@ const LessonPage = ({ data: { mdx: post } }) => {
 export default LessonPage
 
 export const query = graphql`
-  query Lessons($path: String!) {
+  query Lesson($path: String) {
     mdx(frontmatter: { slug: { eq: $path } }) {
       frontmatter {
         title
