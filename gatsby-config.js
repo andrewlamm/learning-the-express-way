@@ -63,4 +63,7 @@ module.exports = {
       },
     },
   ],
+  flags: {
+    GATSBY_CPU_COUNT: 1, // garbage workaround for netlify (https://github.com/gatsbyjs/gatsby/discussions/34473)
+  }
 }
