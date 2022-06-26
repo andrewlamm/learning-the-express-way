@@ -63,7 +63,4 @@ module.exports = {
       },
     },
   ],
-  flags: {
-    PARALLEL_QUERY_RUNNING: false,
-  }
 }
