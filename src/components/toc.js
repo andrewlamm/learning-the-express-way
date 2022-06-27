@@ -52,7 +52,7 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
             paddingBottom: 1,
             paddingLeft: 2,
             paddingRight: 2,
-            fontSize: 3,
+            fontSize: 2,
             borderLeft: lesson.title === lessonTitle ? '3px solid' : '0px solid',
             borderLeftColor: 'primary',
           }}

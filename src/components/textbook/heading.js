@@ -27,7 +27,7 @@ const Heading = ({ lessonTitle, ...props }) => {
       lessonNumber++
     }
     if (lesson.title === lessonTitle) {
-      currentLessonNumber = lessonNumber
+      currentLessonNumber = lesson.extraLessson ? 'EX' : lessonNumber
     }
   })
 
@@ -48,7 +48,7 @@ const Heading = ({ lessonTitle, ...props }) => {
     >
       <Box
         sx={{
-            fontSize: 2,
+            fontSize: 4,
             fontWeight: 900,
         }}
       >

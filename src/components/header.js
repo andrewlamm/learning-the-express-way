@@ -55,10 +55,11 @@ const Header = ({ ...props }) => {
           flexDirection: 'row',
           alignItems: 'center',
       }}
+      id="header"
     >
       <Box
         sx={{
-          fontSize: 6,
+          fontSize: 5,
           color: 'primary',
           marginRight: 6,
           fontWeight: 700,
@@ -77,8 +78,27 @@ const Header = ({ ...props }) => {
       </Box>
       <Box
         sx={{
+          fontSize: 3,
+          color: 'dark',
+          fontFamily: 'body',
+          marginRight: 6,
+          textDecoration: 'none',
+        }}
+      >
+        <Link
+          to='/guide'
+          sx={{
+            color: 'dark',
+            textDecoration: 'none',
+          }}
+        >
+          Guide
+        </Link>
+      </Box>
+      <Box
+        sx={{
           position: 'relative',
-          flexGrow: '1',
+          marginRight: 6,
         }}
         onFocus={ () => setFocused(true) }
         onBlur={ (event) => {
@@ -90,7 +110,7 @@ const Header = ({ ...props }) => {
       >
         <Button
           sx={{
-            fontSize: 5,
+            fontSize: 3,
             color: 'dark',
             fontFamily: 'body',
             background: '#000000',
@@ -98,25 +118,29 @@ const Header = ({ ...props }) => {
             cursor: 'pointer',
           }}
           onClick={ () => setDropdown(!dropdown) }
+          id="lessonDropdown"
         >
           Lessons
-          {!dropdown && <FaCaretDown size='1.2rem' sx={{paddingLeft: 2}} />}
-          {dropdown && <FaCaretUp size='1.2rem' sx={{paddingLeft: 2}} />}
+          {!dropdown && <FaCaretDown size='1rem' sx={{paddingLeft: 2}} />}
+          {dropdown && <FaCaretUp size='1rem' sx={{paddingLeft: 2}} />}
         </Button>
         <Box
           sx={{
             visibility: (dropdown && focused) ? 'visible' : 'hidden',
             opacity: (dropdown && focused) ? 100 : 0,
             position: 'absolute',
-            top: 'calc(100% + 10px)',
+            top: 'calc(100% + 13.5px)',
             bg: 'dark',
             borderBottomLeftRadius: 4,
             borderBottomRightRadius: 4,
             paddingTop: 0,
             paddingBottom: 0,
             zIndex: 999,
-            transition: '0.2 linear'
+            transition: '0.2 linear',
+            width: 'max-content',
+            filter: 'drop-shadow(0 0 0.75rem rgba(0,0,0,0.5))',
           }}
+          id="lessonDropdownList"
         >
           {lessons.map((lesson, i) => (
             <Box
@@ -132,7 +156,7 @@ const Header = ({ ...props }) => {
                 '&:hover, &:focus': {
                   bg: 'secondarydark',
                 },
-                fontSize: 3,
+                fontSize: 2,
               }}
             >
               <Link
@@ -147,6 +171,25 @@ const Header = ({ ...props }) => {
             </Box>
           ))}
         </Box>
+      </Box>
+      <Box
+        sx={{
+          fontSize: 3,
+          color: 'dark',
+          fontFamily: 'body',
+          marginRight: 6,
+          textDecoration: 'none',
+        }}
+      >
+        <Link
+          to='/contributing'
+          sx={{
+            color: 'dark',
+            textDecoration: 'none',
+          }}
+        >
+          Contributing
+        </Link>
       </Box>
     </Flex>
   )
