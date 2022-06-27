@@ -35,6 +35,8 @@ const Header = ({ ...props }) => {
   const [dropdown, setDropdown] = useState(false)
   const [focused, setFocused] = useState(false)
 
+  let lessonNumber = 1
+
   const titleToLink = {}
 
   lessonslug.forEach(lesson => {
@@ -140,7 +142,7 @@ const Header = ({ ...props }) => {
                   color: '#000000',
                 }}
               >
-                Lesson {lesson.extraLessson ? 'EX' : i+1}: {lesson.title}
+                Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
               </Link>
             </Box>
           ))}

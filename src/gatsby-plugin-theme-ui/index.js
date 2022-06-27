@@ -18,8 +18,8 @@ const theme = {
     secondary: '#bc5151',
     dark: '#c0c0c0',
     secondarydark: '#818181',
-    heading: '#f0f8ff',
-    sidebar: '#f5f5f5',
+    heading: '#fAf9f7',
+    sidebar: '#f3f2f1',
   },
   styles: {
     root: {

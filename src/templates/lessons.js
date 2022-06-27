@@ -1,12 +1,14 @@
 /** @jsx jsx */
 
-import { jsx, Flex, Box, Heading } from 'theme-ui'
+import { jsx, Flex, Box } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import Seo from '../components/helmet'
 import Header from '../components/header'
 import TableOfContents from '../components/toc'
+import Heading from '../components/textbook/heading'
+import NavFooter from '../components/textbook/navFooter'
 
 const LessonPage = ({ data: { mdx: post } }) => {
   const {
@@ -16,17 +18,19 @@ const LessonPage = ({ data: { mdx: post } }) => {
   } = post
 
   return (
-    <Box
+    <Flex
       sx={{
         position: 'relative',
         minHeight: '100vh',
+        flexDirection: 'column',
       }}
     >
       <Seo />
       <Header />
       <Flex
         sx={{
-          px: 3,
+          paddingRight: 3,
+          flexGrow: 1,
         }}
       >
         <Box
@@ -34,19 +38,24 @@ const LessonPage = ({ data: { mdx: post } }) => {
             paddingTop: 2,
             width: '20%',
             flexDirection: 'row',
+            bg: 'sidebar',
           }}
         >
           <TableOfContents items={toc} lessonTitle={title} />
         </Box>
         <Box
           sx={{
-            width: '80%'
+            width: '80%',
+            marginTop: 4,
+            marginLeft: 4,
           }}
         >
+          <Heading lessonTitle={title} />
           <MDXRenderer>{body}</MDXRenderer>
+          <NavFooter lessonTitle={title} />
         </Box>
       </Flex>
-    </Box>
+    </Flex>
   )
 }
 

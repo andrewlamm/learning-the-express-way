@@ -37,6 +37,8 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
     titleToLink[lesson.node.frontmatter.title] = lesson.node.frontmatter.slug
   })
 
+  let lessonNumber = 1
+
   return (
     <Box {...props}>
       {lessons.map((lesson, i) => (
@@ -62,7 +64,7 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
               color: '#000000',
             }}
           >
-            Lesson {lesson.extraLessson ? 'EX' : i+1}: {lesson.title}
+            Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
           </Link>
           {lesson.title === lessonTitle && <TableOfContentsLesson items={items} root={true} /> }
         </Box>
