@@ -31,6 +31,7 @@
     "gatsby-source-filesystem": "^2.8.1",
     "gatsby-transformer-yaml": "^2.8.0",
     "path": "^0.12.7",
+    "prismjs": "^1.28.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",

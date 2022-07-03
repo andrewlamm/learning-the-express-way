@@ -50,15 +50,15 @@ module.exports = {
           //     ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
           //   },
           // },
-          // {
-          //   resolve: `gatsby-remark-prismjs`,
-          //   options: {
-          //     classPrefix: 'language-',
-          //     inlineCodeMarker: null,
-          //     aliases: {},
-          //     noInlineHighlight: true,
-          //   },
-          // },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: null,
+              aliases: {},
+              noInlineHighlight: true,
+            },
+          },
         ],
       },
     },

@@ -44,6 +44,7 @@ const Heading = ({ lessonTitle, ...props }) => {
           borderLeft: '4px solid',
           borderColor: '#000000',
           flexDirection: 'column',
+          // width: '900px'
       }}
     >
       <Box

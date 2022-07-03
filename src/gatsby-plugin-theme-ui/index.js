@@ -34,6 +34,15 @@ const theme = {
       color: 'primary',
       fontWeight: 900,
     },
+    code: {
+      '.boolean, .number': { color: '#EF9CDA' },
+      '.property, .class-name, .constant, .symbol, .variable': {
+        color: '#ffa500',
+      },
+      '.keyword, .tag, .selector': {
+        color: 'primary',
+      },
+    }
   },
   sizes: {
     container: 1200,

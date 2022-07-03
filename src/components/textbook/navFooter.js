@@ -89,24 +89,24 @@ const NavFooter = ({ lessonTitle, ...props }) => {
 			>
 				{prevLesson &&
 					<>
-						<Box
-							sx={{
-								fontWeight: 700,
-							}}
-						>
-							Previous Lesson
-						</Box>
-						<Box>
-							<Link
-                to={titleToLink[prevLesson.title]}
+            <Link
+              to={titleToLink[prevLesson.title]}
+              sx={{
+                textDecoration: 'none',
+                color: '#000000',
+              }}
+            >
+              <Box
                 sx={{
-                  textDecoration: 'none',
-                  color: '#000000',
+                  fontWeight: 700,
                 }}
               >
-								Lesson {prevLesson.number}: {prevLesson.title}
-							</Link>
-						</Box>
+                Previous Lesson
+              </Box>
+              <Box>
+                  Lesson {prevLesson.number}: {prevLesson.title}
+              </Box>
+            </Link>
 					</>
 				}
 			</Flex>
@@ -119,24 +119,24 @@ const NavFooter = ({ lessonTitle, ...props }) => {
 			>
 				{nextLesson &&
 					<>
-						<Box
-							sx={{
-								fontWeight: 700,
-							}}
-						>
-							Next Lesson
-						</Box>
-						<Box>
-							<Link
-                to={titleToLink[nextLesson.title]}
+            <Link
+              to={titleToLink[nextLesson.title]}
+              sx={{
+                textDecoration: 'none',
+                color: '#000000',
+              }}
+            >
+              <Box
                 sx={{
-                  textDecoration: 'none',
-                  color: '#000000',
+                  fontWeight: 700,
                 }}
               >
-								Lesson {nextLesson.number}: {nextLesson.title}
-							</Link>
-						</Box>
+                Next Lesson
+              </Box>
+              <Box>
+                  Lesson {nextLesson.number}: {nextLesson.title}
+              </Box>
+            </Link>
 					</>
 				}
 			</Flex>
