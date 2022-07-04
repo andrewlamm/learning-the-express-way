@@ -39,11 +39,16 @@ const LessonPage = ({ data: { mdx: post } }) => {
             width: '20%',
             flexDirection: 'row',
             bg: 'sidebar',
-            top: 0,
-            position: 'sticky',
           }}
         >
-          <TableOfContents items={toc} lessonTitle={title} />
+          <Box
+            sx={{
+              top: 0,
+              position: 'sticky',
+            }}
+          >
+            <TableOfContents items={toc} lessonTitle={title} />
+          </Box>
         </Box>
         <Box
           sx={{

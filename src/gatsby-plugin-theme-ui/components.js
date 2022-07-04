@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Link, Image, jsx } from 'theme-ui'
+import { Image, jsx } from 'theme-ui'
 
 const Blockquote = ({ children, ...props }) => (
   <blockquote
