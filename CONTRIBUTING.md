@@ -32,4 +32,4 @@ where the slug is an appropriate link to your lesson. Example [.md]() and [.mdx]
 - title: 'EXAMPLE TITLE'
   extraLessson: bool
 ```
-where the title name matches exactly with the one found in your markdown file. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one. Additionally, if you are using an mdx, you must include the proper incldue statements for the textbook elements that you will be using.After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.
+where the title name matches exactly with the one found in your markdown file. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one. After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.

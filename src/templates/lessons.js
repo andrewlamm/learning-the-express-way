@@ -3,12 +3,18 @@
 import { jsx, Flex, Box } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
+import { MDXProvider } from '@mdx-js/react'
 
 import Seo from '../components/helmet'
 import Header from '../components/header'
 import TableOfContents from '../components/toc'
 import Heading from '../components/textbook/heading'
 import NavFooter from '../components/textbook/navFooter'
+
+import Warning from '../components/textbook/warning.js'
+import OtherInfo from '../components/textbook/otherInfo'
+
+const mdxComponents = { Warning, OtherInfo }
 
 const LessonPage = ({ data: { mdx: post } }) => {
   const {
@@ -58,7 +64,9 @@ const LessonPage = ({ data: { mdx: post } }) => {
           }}
         >
           <Heading lessonTitle={title} />
-          <MDXRenderer>{body}</MDXRenderer>
+          <MDXProvider components={mdxComponents}>
+            <MDXRenderer>{body}</MDXRenderer>
+          </MDXProvider>
           <NavFooter lessonTitle={title} />
         </Box>
       </Flex>
