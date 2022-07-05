@@ -1,7 +1,16 @@
 - title: 'Introduction to HTML'
+- title: 'Designing with CSS'
 - title: 'Javascript Basics'
-- title: 'Using Express'
+- title: 'Advanced Javascript'
+- title: 'jQuery'
+  extraLessson: true
+- title: 'Starting with Express'
 - title: 'Displaying Things Using Handlebars'
-- title: 'Learning MySQL'
-- title: 'EJS'
+- title: 'Storing Data with SQL'
+- title: 'Cookies! Yum'
+- title: 'Using OAuth to Authenticate Ion Accounts'
+  extraLessson: true
+- title: 'A Basic Vocabulary List'
+  extraLessson: true
+- title: 'Using EJS'
   extraLessson: true

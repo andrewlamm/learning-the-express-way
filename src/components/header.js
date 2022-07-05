@@ -143,32 +143,26 @@ const Header = ({ ...props }) => {
           id="lessonDropdownList"
         >
           {lessons.map((lesson, i) => (
-            <Box
+            <Link
               key={i}
+              to={titleToLink[lesson.title]}
               sx={{
-                display: 'block',
-                textDecoration: 'none',
-                color: '#000000',
                 paddingTop: 1,
                 paddingBottom: 1,
                 paddingLeft: 2,
                 paddingRight: 2,
-                '&:hover, &:focus': {
+                textDecoration: 'none',
+                display: 'block',
+                textDecoration: 'none',
+                color: '#000000',
+                '&:hover': {
                   bg: 'secondarydark',
                 },
                 fontSize: 2,
               }}
             >
-              <Link
-                to={titleToLink[lesson.title]}
-                sx={{
-                  textDecoration: 'none',
-                  color: '#000000',
-                }}
-              >
-                Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
-              </Link>
-            </Box>
+              Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
+            </Link>
           ))}
         </Box>
       </Box>
