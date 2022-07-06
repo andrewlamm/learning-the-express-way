@@ -61,7 +61,7 @@ const Header = ({ ...props }) => {
         sx={{
           fontSize: 5,
           color: 'primary',
-          marginRight: 6,
+          marginRight: 4,
           fontWeight: 700,
           textDecoration: 'none',
         }}
@@ -81,7 +81,7 @@ const Header = ({ ...props }) => {
           fontSize: 3,
           color: 'dark',
           fontFamily: 'body',
-          marginRight: 6,
+          marginRight: 4,
           textDecoration: 'none',
         }}
       >
@@ -98,7 +98,7 @@ const Header = ({ ...props }) => {
       <Box
         sx={{
           position: 'relative',
-          marginRight: 6,
+          marginRight: 4,
         }}
         onFocus={ () => setFocused(true) }
         onBlur={ (event) => {
@@ -171,7 +171,7 @@ const Header = ({ ...props }) => {
           fontSize: 3,
           color: 'dark',
           fontFamily: 'body',
-          marginRight: 6,
+          marginRight: 4,
           textDecoration: 'none',
         }}
       >

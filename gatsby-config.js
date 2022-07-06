@@ -9,6 +9,7 @@ module.exports = {
   plugins: [
     'gatsby-plugin-theme-ui',
     'gatsby-transformer-yaml',
+    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -21,6 +22,13 @@ module.exports = {
       options: {
         name: 'lessons',
         path: './lessons',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/images`,
       },
     },
     {
@@ -37,19 +45,19 @@ module.exports = {
               icon: false,
             },
           },
-          // {
-          //   resolve: `gatsby-remark-images`,
-          //   options: {
-          //     withWebp: true,
-          //     linkImagesToOriginal: true,
-          //   }
-          // },
-          // {
-          //   resolve: 'gatsby-remark-copy-linked-files',
-          //   options: {
-          //     ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
-          //   },
-          // },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              withWebp: true,
+              linkImagesToOriginal: true,
+            }
+          },
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {
+              ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {

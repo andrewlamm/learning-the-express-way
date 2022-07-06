@@ -6,7 +6,7 @@ const theme = {
     body: 'system-ui, sans-serif',
     heading: 'system-ui, sans-serif',
   },
-  fontSizes: [12, 14, 16, 20, 24, 28, 32, 48, 64, 96],
+  fontSizes: [12, 14, 16, 18, 20, 24, 28, 32, 48, 64, 96],
   lineHeights: {
     body: 1.5,
     heading: 1.5,

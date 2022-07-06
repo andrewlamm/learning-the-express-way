@@ -58,7 +58,7 @@ const Heading = ({ lessonTitle, ...props }) => {
       <Box
 				sx={{
 					marginTop: 1,
-					fontSize: 7,
+					fontSize: 8,
 					color: 'primary',
 					fontWeight: 100,
 				}}
