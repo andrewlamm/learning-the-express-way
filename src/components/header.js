@@ -153,7 +153,6 @@ const Header = ({ ...props }) => {
                 paddingRight: 2,
                 textDecoration: 'none',
                 display: 'block',
-                textDecoration: 'none',
                 color: '#000000',
                 '&:hover': {
                   bg: 'secondarydark',

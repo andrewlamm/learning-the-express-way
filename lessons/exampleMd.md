@@ -3,7 +3,7 @@ title: Example Md File
 slug: /template/md
 ---
 
-You can look at the source markdown file [here](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMd.md). Remember to include the frontmatter in the beginning of the file, with the correct title and slug tags! And check that the title is the same as the one you added in the [lessonList.yml](https://github.com/superandybean/learning-the-express-way/blob/master/data/lessonList.yml) file.
+You can look at the source markdown file [here](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMd.md) and clicking on the raw button. Remember to include the frontmatter in the beginning of the file, with the correct title and slug tags! And check that the title is the same as the one you added in the [lessonList.yml](https://github.com/superandybean/learning-the-express-way/blob/master/data/lessonList.yml) file.
 
 # Heading 1
 
@@ -59,6 +59,8 @@ Finally, for code blocks, use three ticks
     </body>
 </html>
 ```
+
+For inline code blocks, use a singular tick, like `this!`. If you want to use language highlighting, first add the language, then the character ›, then type your code. Like `js›const wow = "wowowow!"`.
 
 Want a horizontal line? Use three dashes like so:
 

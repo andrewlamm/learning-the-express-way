@@ -29,6 +29,7 @@ const Heading = ({ lessonTitle, ...props }) => {
     if (lesson.title === lessonTitle) {
       currentLessonNumber = lesson.extraLessson ? 'EX' : lessonNumber
     }
+    return null
   })
 
   return (

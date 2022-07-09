@@ -4,6 +4,7 @@ import { jsx, Flex, Box } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { MDXProvider } from '@mdx-js/react'
+import { Global } from '@emotion/core'
 
 import Seo from '../components/helmet'
 import Header from '../components/header'
@@ -33,6 +34,16 @@ const LessonPage = ({ data: { mdx: post } }) => {
     >
       <Seo />
       <Header />
+      <Global
+        styles={{
+          '.gatsby-highlight': {
+            overflow: 'auto',
+            padding: '1rem',
+            backgroundColor: '#eeeeee',
+            display: 'flex',
+          }
+        }}
+      />
       <Flex
         sx={{
           paddingRight: 3,
@@ -56,19 +67,27 @@ const LessonPage = ({ data: { mdx: post } }) => {
             <TableOfContents items={toc} lessonTitle={title} />
           </Box>
         </Box>
-        <Box
+        <Flex
           sx={{
             width: '80%',
             marginTop: 4,
             marginLeft: 4,
+            justifyContent: 'center',
           }}
         >
-          <Heading lessonTitle={title} />
-          <MDXProvider components={mdxComponents}>
-            <MDXRenderer>{body}</MDXRenderer>
-          </MDXProvider>
-          <NavFooter lessonTitle={title} />
-        </Box>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '960px',
+            }}
+          >
+            <Heading lessonTitle={title} />
+            <MDXProvider components={mdxComponents}>
+              <MDXRenderer>{body}</MDXRenderer>
+            </MDXProvider>
+            <NavFooter lessonTitle={title} />
+          </Box>
+        </Flex>
       </Flex>
     </Flex>
   )

@@ -17,26 +17,18 @@ const Blockquote = ({ children, ...props }) => (
 )
 
 const Codeblock = ({ children, ...props })  => (
-  <div
+  <code
+    {...props}
     sx={{
+      whiteSpace: 'pre',
+      wordSpacing: 'normal',
+      wordBreak: 'normal',
+      wordWrap: 'normal',
       backgroundColor: '#eeeeee',
-      my: 2,
-      paddingBottom: 2,
-      paddingLeft: 2,
     }}
   >
-    <code
-      {...props}
-      sx={{
-        whiteSpace: 'pre',
-        wordSpacing: 'normal',
-        wordBreak: 'normal',
-        wordWrap: 'normal',
-      }}
-    >
-      {children}
-    </code>
-  </div>
+    {children}
+  </code>
 )
 
 export default {

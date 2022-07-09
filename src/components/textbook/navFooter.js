@@ -68,6 +68,7 @@ const NavFooter = ({ lessonTitle, ...props }) => {
 				}
 			}
     }
+    return null
   })
 
   return (
