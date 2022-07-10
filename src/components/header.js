@@ -56,7 +56,8 @@ const Header = ({ ...props }) => {
           paddingBottom: 2,
           flexDirection: 'row',
           alignItems: 'center',
-          position: 'relative'
+          position: 'relative',
+          zIndex: 99,
       }}
       id="header"
     >
@@ -64,6 +65,7 @@ const Header = ({ ...props }) => {
         sx={{
           fontSize: [3, 5, 5],
           color: 'primary',
+          bg: '#000000',
           marginRight: 4,
           fontWeight: 700,
           textDecoration: 'none',
@@ -74,6 +76,7 @@ const Header = ({ ...props }) => {
           sx={{
             color: 'primary',
             textDecoration: 'none',
+            bg: '#000000',
           }}
         >
           Learning the Express Way
@@ -99,7 +102,6 @@ const Header = ({ ...props }) => {
       <Flex
         sx={{
           flexDirection: ['column', 'row', null],
-          display: [isOpen ? 'flex' : 'none', 'flex', 'flex'],
           position: ['absolute', 'static', null],
           left: 0,
           top: '100%',
@@ -108,7 +110,10 @@ const Header = ({ ...props }) => {
           background: ['#000000', 'initial', null],
           py: [2, 0, null],
           borderTop: ['1px solid', 'none', null],
-          borderColor: '#ffffff'
+          borderColor: '#ffffff',
+          transform: isOpen ? 'translateY(0)' : ['translateY(-200%)', 'translateY(0)', null],
+          transition: 'transform 0.2s linear',
+          zIndex: -1,
         }}
       >
         <Box

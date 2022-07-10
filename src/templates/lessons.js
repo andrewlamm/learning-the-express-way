@@ -60,12 +60,14 @@ const LessonPage = ({ data: { mdx: post } }) => {
         <Box
           sx={{
             paddingTop: 2,
-            width: isOpen ? ['80%', '33%', '20%'] : ['0%', '33%', '20%'],
+            width: ['80%', '33%', '20%'],
             flexDirection: 'row',
             bg: 'sidebar',
-            display: isOpen ? ['block', 'block', 'block'] : ['none', 'block', 'block'],
+            display: ['block', 'block', 'block'],
             position: ['fixed', 'inherit', null],
             top: 0,
+            transform: isOpen ? 'translateX(0)' : ['translateX(-100%)', 'translateX(0)', null],
+            transition: 'transform 0.2s linear',
             height: ['100vh', 'auto', null],
             zIndex: 1,
           }}
@@ -97,6 +99,7 @@ const LessonPage = ({ data: { mdx: post } }) => {
               sx={{
                 position: 'fixed',
                 left: isOpen ? '80%' : 0,
+                transition: 'left 200ms linear',
                 bottom: '2rem',
                 py: 2,
                 width: '24px',
