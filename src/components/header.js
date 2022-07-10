@@ -57,7 +57,7 @@ const Header = ({ ...props }) => {
           flexDirection: 'row',
           alignItems: 'center',
           position: 'relative',
-          zIndex: 99,
+          zIndex: 0,
       }}
       id="header"
     >
