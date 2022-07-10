@@ -161,9 +161,9 @@ const Header = ({ ...props }) => {
           </Button>
           <Box
             sx={{
-              visibility: (dropdown && focused) ? 'visible' : 'hidden',
-              opacity: (dropdown && focused) ? 100 : 0,
-              display: (dropdown && focused) ? 'inherit' : 'none',
+              visibility: (dropdown) ? 'visible' : 'hidden',
+              opacity: (dropdown) ? 100 : 0,
+              display: (dropdown) ? 'inherit' : 'none',
               position: ['static', 'absolute', null],
               top: 'calc(100% + 13.5px)',
               bg: ['#000000', 'dark', null],
