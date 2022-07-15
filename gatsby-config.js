@@ -40,6 +40,14 @@ module.exports = {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
           {
+            resolve: `gatsby-remark-embed-video`,
+            options: {
+              width: 800,
+              beginMarker: `{{`,
+              endMarker: `}}`,
+            }
+          },
+          {
             resolve: 'gatsby-remark-autolink-headers',
             options: {
               icon: false,

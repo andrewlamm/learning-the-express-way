@@ -48,6 +48,9 @@ and dashes
 Inserting an image is just like a link, except you add an exclamation in front!        
 ![](../src/images/icon.png)
 
+To embed youtube videos, use the format with `{{youtube: YOUTUBE_LINK}}` like:
+{{youtube: https://www.youtube.com/watch?v=cuQxgzEkKxY}}
+
 Finally, for code blocks, use three ticks
 
 ```html
