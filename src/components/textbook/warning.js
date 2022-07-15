@@ -1,6 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, Box, Flex } from 'theme-ui'
+import Markdown from 'markdown-to-jsx'
 
 const Warning = ({ children, ...props }) => (
     <Flex
@@ -35,7 +36,9 @@ const Warning = ({ children, ...props }) => (
                 borderWidth: '0 1px 1px 1px',
             }}
         >
-            {children}
+            <Markdown>
+                {children}
+            </Markdown>
         </Box>
     </Flex>
 )
