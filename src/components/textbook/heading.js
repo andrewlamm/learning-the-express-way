@@ -12,7 +12,7 @@ const Heading = ({ lessonTitle, ...props }) => {
         allLessonListYaml {
           nodes {
             title
-            extraLessson
+            extraLesson
           }
         }
       }
@@ -23,11 +23,11 @@ const Heading = ({ lessonTitle, ...props }) => {
   let currentLessonNumber = 0
 
   lessons.map((lesson, i) => {
-    if (!lesson.extraLessson) {
+    if (!lesson.extraLesson) {
       lessonNumber++
     }
     if (lesson.title === lessonTitle) {
-      currentLessonNumber = lesson.extraLessson ? 'EX' : lessonNumber
+      currentLessonNumber = lesson.extraLesson ? 'EX' : lessonNumber
     }
     return null
   })

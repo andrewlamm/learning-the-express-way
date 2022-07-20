@@ -14,7 +14,7 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
         allLessonListYaml {
           nodes {
             title
-            extraLessson
+            extraLesson
           }
         }
         allMdx {
@@ -64,7 +64,7 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
               color: '#000000',
             }}
           >
-            Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
+            Lesson {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
           </Link>
           {lesson.title === lessonTitle && <TableOfContentsLesson items={items} root={true} /> }
         </Box>

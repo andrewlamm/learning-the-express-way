@@ -10,7 +10,7 @@ Firstly, please check out [this list](https://github.com/superandybean/learning-
 ## Suggesting Enhancements
 
 Have any suggestions? This is the guide for you.       
-Similarly to submitting a bug report, check out [this list](https://github.com/superandybean/learning-the-express-way/issues?q=is%3Aissue+is%3Aopen+label%3Abug+) to see if your suggestion has already been suggested. When creating the enhancement post, please be as precise and clear as possible, including images if necessary. Additionally, use a clear title and tag the issue with the "enhancement" tag.
+Similarly to submitting a bug report, check out [this list](https://github.com/superandybean/learning-the-express-way/labels/enhancement) to see if your suggestion has already been suggested. When creating the enhancement post, please be as precise and clear as possible, including images if necessary. Additionally, use a clear title and tag the issue with the "enhancement" tag.
 
 ## Contributing Code
 
@@ -27,9 +27,10 @@ title: 'EXAMPLE TITLE'
 slug: /lesson/EXAMPLE_LINK
 ---
 ```
-where the slug is an appropriate link to your lesson. Example [.md](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMd.md) and [.mdx](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMdx.mdx) files are provided, and their results are shown [here](http://localhost:8000/template/md) and [here](http://localhost:8000/template/mdx) respectively. After that, please update the [lessonList.yml](https://github.com/superandybean/learning-the-express-way/blob/master/data/lessonList.yml) file and add your lesson in the appropriate order. Use the format
+where the slug is an appropriate link to your lesson. Example [.md](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMd.md) and [.mdx](https://github.com/superandybean/learning-the-express-way/blob/master/lessons/exampleMdx.mdx) files are provided, and their results are shown [here](https://lew.sites.tjhsst.edu/template/md) and [here](https://lew.sites.tjhsst.edu/template/mdx) respectively. After that, please update the [lessonList.yml](https://github.com/superandybean/learning-the-express-way/blob/master/data/lessonList.yml) file and add your lesson in the appropriate order. Use the format
 ```
 - title: 'EXAMPLE TITLE'
-  extraLessson: bool
+  description: 'Example description.'
+  extraLesson: bool
 ```
-where the title name matches exactly with the one found in your markdown file. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one. After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.
+where the title name matches exactly with the one found in your markdown file. Additionally, provide a short 1-2 sentence summary of your lesson with the description argument. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one. After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.

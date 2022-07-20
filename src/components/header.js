@@ -16,7 +16,7 @@ const Header = ({ ...props }) => {
         allLessonListYaml {
           nodes {
             title
-            extraLessson
+            extraLesson
           }
         }
         allMdx {
@@ -203,7 +203,7 @@ const Header = ({ ...props }) => {
                   fontSize: 2,
                 }}
               >
-                Lesson {lesson.extraLessson ? 'EX' : lessonNumber++}: {lesson.title}
+                Lesson {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
               </Link>
             ))}
           </Box>

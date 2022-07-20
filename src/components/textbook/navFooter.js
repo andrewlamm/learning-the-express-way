@@ -14,7 +14,7 @@ const NavFooter = ({ lessonTitle, ...props }) => {
         allLessonListYaml {
           nodes {
             title
-            extraLessson
+            extraLesson
           }
         }
         allMdx {
@@ -44,7 +44,7 @@ const NavFooter = ({ lessonTitle, ...props }) => {
   let nextLesson = undefined
 
   lessons.map((lesson, i) => {
-    if (!lesson.extraLessson) {
+    if (!lesson.extraLesson) {
       lessonNumber++
     }
     if (lesson.title === lessonTitle) {
@@ -52,7 +52,7 @@ const NavFooter = ({ lessonTitle, ...props }) => {
     }
     else {
       if (currentLessonNumber === -1) {
-				if (lesson.extraLessson) {
+				if (lesson.extraLesson) {
 					prevLesson = {number: 'EX', title: lesson.title, link: titleToLink[lesson.title]}
 				}
 				else {
@@ -60,7 +60,7 @@ const NavFooter = ({ lessonTitle, ...props }) => {
 				}
 			}
 			else if (nextLesson === undefined) {
-				if (lesson.extraLessson) {
+				if (lesson.extraLesson) {
 					nextLesson = {number: 'EX', title: lesson.title, link: titleToLink[lesson.title]}
 				}
 				else {

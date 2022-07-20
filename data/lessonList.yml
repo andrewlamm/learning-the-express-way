@@ -1,16 +1,28 @@
 - title: 'Introduction to HTML'
+  description: 'An introduction to HyperText Markup Language (HTML) and web development. Learn how to create your first website!'
 - title: 'Designing with CSS'
+  description: 'Use Cascading Style Sheets (CSS) to design your new webpage.'
 - title: 'Javascript Basics'
+  description: 'Learn about Javascript to create interactive web content, such as buttons.'
 - title: 'Advanced Javascript'
+  description: 'Build on to your javascript knowledge and learn more complicated javascript topics such as promises.'
 - title: 'jQuery'
-  extraLessson: true
+  description: 'Introduction to jQuery and its uses.'
+  extraLesson: true
 - title: 'Starting with Express'
+  description: 'Use Express to add a backend server to your webpage.'
 - title: 'Displaying Things Using Handlebars'
+  description: 'Using handlebars to create a template and easily generate HTML code.'
 - title: 'Storing Data with SQL'
+  description: 'Begin using databases and storing data.'
 - title: 'Cookies! Yum'
+  description: 'An introudction to what cookies are and how to use them.'
 - title: 'Using OAuth to Authenticate Ion Accounts'
-  extraLessson: true
+  description: 'Learn how to authenticate Ion accounts on your webpage.'
+  extraLesson: true
 - title: 'A Basic Vocabulary List'
-  extraLessson: true
+  description: 'A basic vocabulary list that will help you improve your search results.'
+  extraLesson: true
 - title: 'Using EJS'
-  extraLessson: true
+  description: 'Learn EJS, another templating language similar to handlebars.'
+  extraLesson: true
