@@ -25,15 +25,28 @@ const Codeblock = ({ children, ...props })  => (
       wordBreak: 'normal',
       wordWrap: 'normal',
       backgroundColor: '#eeeeee',
+      px: 1,
     }}
   >
     {children}
   </code>
 )
 
+const MdxLink = ({ children, ...props }) => {
+  return (
+    <a
+      sx={{color: 'blue'}}
+      {...props}
+    >
+      {children}
+    </a>
+  )
+}
+
 export default {
   pre: (props) => props.children,
   code: Codeblock,
   blockquote: Blockquote,
+  a: MdxLink,
   img: Image,
 }

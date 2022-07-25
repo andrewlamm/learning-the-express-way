@@ -15,10 +15,11 @@ import TableOfContents from '../components/toc'
 import Heading from '../components/textbook/heading'
 import NavFooter from '../components/textbook/navFooter'
 
-import Warning from '../components/textbook/warning.js'
+import Warning from '../components/textbook/warning'
 import OtherInfo from '../components/textbook/otherInfo'
+import TipBox from '../components/textbook/tipBox'
 
-const mdxComponents = { Warning, OtherInfo }
+const mdxComponents = { Warning, OtherInfo, TipBox }
 
 const LessonPage = ({ data: { mdx: post } }) => {
   const {

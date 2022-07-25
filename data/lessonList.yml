@@ -6,9 +6,6 @@
   description: 'Learn about Javascript to create interactive web content, such as buttons.'
 - title: 'Advanced Javascript'
   description: 'Build on to your javascript knowledge and learn more complicated javascript topics such as promises.'
-- title: 'jQuery'
-  description: 'Introduction to jQuery and its uses.'
-  extraLesson: true
 - title: 'Starting with Express'
   description: 'Use Express to add a backend server to your webpage.'
 - title: 'Displaying Things Using Handlebars'
@@ -22,7 +19,4 @@
   extraLesson: true
 - title: 'A Basic Vocabulary List'
   description: 'A basic vocabulary list that will help you improve your search results.'
-  extraLesson: true
-- title: 'Using EJS'
-  description: 'Learn EJS, another templating language similar to handlebars.'
   extraLesson: true
