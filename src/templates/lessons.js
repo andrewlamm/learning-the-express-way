@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect, useRef } from 'react'
 import { jsx, Flex, Box } from 'theme-ui'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
@@ -28,6 +28,30 @@ const LessonPage = ({ data: { mdx: post } }) => {
     tableOfContents: { items: toc }
   } = post
 
+  /* Change sidebar height depending on whether or not the header is visible */
+
+  const headerRef = useRef(null)
+  const sidebarRef = useRef(null)
+
+  useEffect(() => {
+    const sidebar = document.getElementById('sidebar')
+    const header = document.getElementById('header') // Use getElementByID as the Ref occasionally breaks when scrolling to the bottom of the page?
+    sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+    sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+    document.addEventListener('scroll', _ => {
+      // console.log(window.scrollY)
+      // console.log(header.offsetHeight)
+      if (window.scrollY < header.offsetHeight) {
+        sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+        sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+      }
+      else {
+        sidebar.style.maxHeight = '100vh'
+        sidebar.style.minHeight = '100vh'
+      }
+    })
+  })
+
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -36,15 +60,16 @@ const LessonPage = ({ data: { mdx: post } }) => {
         position: 'relative',
         minHeight: '100vh',
         flexDirection: 'column',
-        overflow: 'hidden',
       }}
     >
       <Seo />
-      <Header />
+      <Box ref={headerRef}>
+        <Header />
+      </Box>
       <Global
         styles={{
           '.gatsby-highlight': {
-            overflow: 'auto',
+            //overflow: 'auto',
             padding: '1rem',
             backgroundColor: '#eeeeee',
             display: 'flex',
@@ -60,23 +85,33 @@ const LessonPage = ({ data: { mdx: post } }) => {
       >
         <Box
           sx={{
-            paddingTop: 2,
-            width: ['80%', '33%', '20%'],
-            flexDirection: 'row',
+            pt: 2,
+            pb: 3,
+            width: ['80%', '33%', '21%'],
+            // flexDirection: 'row',
+            height: '100%',
+            minHeight: '100vh',
+            maxHeight: '100vh',
+            alignSelf: 'flex-start',
             bg: 'sidebar',
             display: ['block', 'block', 'block'],
-            position: ['fixed', 'inherit', null],
+            position: ['fixed', 'sticky', null],
+            overflowY: 'scroll',
             top: 0,
+            bottom: 0,
             transform: isOpen ? 'translateX(0)' : ['translateX(-100%)', 'translateX(0)', null],
             transition: 'transform 0.2s linear',
             height: ['100vh', 'auto', null],
             zIndex: 1,
           }}
+          id='sidebar'
+          ref={sidebarRef}
         >
           <Box
             sx={{
               top: 0,
-              position: ['sticky', 'sticky', null],
+              width: '100%',
+              // position: ['sticky', 'sticky', null],
             }}
           >
             <TableOfContents items={toc} lessonTitle={title} />
@@ -84,19 +119,20 @@ const LessonPage = ({ data: { mdx: post } }) => {
         </Box>
         <Flex
           sx={{
-            width: ['100%', '67%', '80%'],
-            marginTop: [3, 4, 4],
-            marginLeft: [2, 4, 4],
-            justifyContent: 'center',
+            width: ['100%', '67%', '79%'],
+            marginTop: [3, '40px', null],
+            marginLeft: [2, '50px', null],
+            marginRight: [2, '50px', null],
+            // justifyContent: 'center',
           }}
         >
           <Box
             sx={{
               width: '100%',
-              maxWidth: '960px',
+              // maxWidth: '960px',
             }}
           >
-            <Box
+            <Box // Mobile only
               sx={{
                 position: 'fixed',
                 left: isOpen ? '80%' : 0,

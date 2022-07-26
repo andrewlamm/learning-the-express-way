@@ -33,7 +33,7 @@ const IndexPage = () => {
             fontWeight: 700,
           }}
         >
-          Welcome to <Themed.b>Welcome to the Express Way!</Themed.b>
+          Welcome to <Themed.b>Learning the Express Way!</Themed.b>
         </Box>
       </Box>
     </Flex>

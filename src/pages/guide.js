@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import { jsx, Flex, Box } from 'theme-ui'
+import { jsx, Flex, Box, Themed } from 'theme-ui'
 import { graphql, Link } from 'gatsby'
 
 import Seo from '../components/helmet'
@@ -40,29 +40,37 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
       <Box
         sx={{
           my: 2,
-          maxWidth: '960px',
-          mx: 2,
+          mx: 4,
         }}
       >
-        <Box>
+        <Flex
+          sx={{
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           {guides.map((section, i) => (
-            <Box
+            <Flex
               key={i}
               sx={{
-                width: '100%',
+                width: '80%',
+                mb: '30px',
+                mt: '20px',
+                flexDirection: 'column',
+                // alignItems: 'center',
               }}
             >
-              <Box
+              <Themed.h1
                 sx={{
                   mt: 2,
                   mb: 1,
                   fontSize: [5, 7, null],
-                  fontWeight: 700,
                   textAlign: 'center',
+                  fontFamily: 'heading',
                 }}
               >
                 {section.name}
-              </Box>
+              </Themed.h1>
               <Box>
                 {section.description}
               </Box>
@@ -75,7 +83,8 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
                   <Box
                     key={j}
                     sx={{
-                      my: 1,
+                      mt: 1,
+                      mb: 1,
                     }}
                   >
                     <Box
@@ -99,9 +108,9 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
                   </Box>
                 ))}
               </Box>
-            </Box>
+            </Flex>
           ))}
-        </Box>
+        </Flex>
       </Box>
     </Flex>
   )

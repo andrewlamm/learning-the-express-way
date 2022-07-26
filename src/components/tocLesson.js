@@ -1,17 +1,25 @@
 /** @jsx jsx */
-import { jsx } from 'theme-ui'
+import { jsx, Box } from 'theme-ui'
 import { Link } from 'react-scroll'
 
-const TableOfContentsLesson = ({ items: baseItems, root = true, ...props }) => {
+const TableOfContentsLesson = ({ items: baseItems, root = true, depth, ...props }) => {
   return (
-    <ul
+    <Box
         {...props}
         sx={{
-            listStyle: 'none',
+            // listStyle: 'none',
+            // paddingLeft: depth*10,
+            // paddingRight: '3px',
+            // marginTop: root ? '0.7px' : 0,
+            marginBottom: root ? '0.7px' : 0,
         }}
     >
       {baseItems.map(({ url, title, items }) => (
-        <li key={url}>
+        <Box key={url}
+          sx={{
+            // py: '1.5px',
+          }}
+        >
           <Link
             href={url}
             to={url.substring(1)}
@@ -19,17 +27,25 @@ const TableOfContentsLesson = ({ items: baseItems, root = true, ...props }) => {
             duration={400}
             hashSpy={true}
             sx={{
-              fontWeight: root ? 'bold' : 'normal',
-              color: 'secondary',
+              fontWeight: 'normal',
+              color: 'accent',
               textDecoration: 'none',
+              width: '100%',
+              display: 'block',
+              paddingLeft: depth*25+10,
+              paddingRight: 2,
+              py: '2px',
+              '&:hover': {
+                bg: 'highlight',
+              },
             }}
           >
             {title}
           </Link>
-          {items && <TableOfContentsLesson items={items} root={false} />}
-        </li>
+          {items && <TableOfContentsLesson items={items} root={false} depth={depth+1} />}
+        </Box>
       ))}
-    </ul>
+    </Box>
   )
 }
 

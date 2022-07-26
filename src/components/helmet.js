@@ -22,7 +22,11 @@ const Seo = ({ ...props }) => {
   )
 
   return (
-    <Helmet { ...props } >
+    <Helmet { ...props }
+      bodyAttributes={{
+        style: 'overflow-x: hidden'
+      }}
+    >
       <html lang='en' />
 
       <title>{data.title}</title>

@@ -40,7 +40,11 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
   let lessonNumber = 1
 
   return (
-    <Box {...props}>
+    <Box {...props}
+      sx={{
+        marginTop: '10px',
+      }}
+    >
       {lessons.map((lesson, i) => (
         <Box
           key={i}
@@ -48,13 +52,13 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
             display: 'block',
             textDecoration: 'none',
             color: '#000000',
-            paddingTop: 1,
-            paddingBottom: 1,
-            paddingLeft: 2,
-            paddingRight: 2,
+            marginLeft: '15px',
+            // paddingRight: 2,
+            paddingLeft: 0,
             fontSize: 2,
-            borderLeft: lesson.title === lessonTitle ? '3px solid' : '0px solid',
-            borderLeftColor: 'primary',
+            borderLeft: lesson.title === lessonTitle ? '3.2px solid' : '3.2px solid',
+            borderLeftColor: lesson.title === lessonTitle ? 'accent' : 'transparent',
+            fontFamily: 'heading',
           }}
         >
           <Link
@@ -62,11 +66,32 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
             sx={{
               textDecoration: 'none',
               color: '#000000',
+              width: '100%',
+              display: 'block',
+              paddingLeft: '10px',
+              paddingTop: 1,
+              paddingBottom: 1,
+              paddingRight: 2,
+              bg: lesson.title === lessonTitle ? 'highlight' : 'transparent',
+              '&:hover': {
+                bg: 'highlight',
+              },
             }}
           >
-            Lesson {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
+            {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
           </Link>
-          {lesson.title === lessonTitle && <TableOfContentsLesson items={items} root={true} /> }
+          {lesson.title === lessonTitle &&
+            <TableOfContentsLesson
+              items={items}
+              root={true}
+              depth={0}
+              sx={{
+                // paddingLeft: '10px',
+                bg: 'sidebar',
+                paddingBottom: '4px',
+              }}
+            />
+          }
         </Box>
       ))}
     </Box>

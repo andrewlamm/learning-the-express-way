@@ -3,7 +3,7 @@ title: Introduction to HTML
 slug: /lesson/html
 ---
 
-Hypertext Markup Language, commonly known as HTML, is the language we use to create web pages. In this lesson, we will learn the basics of HTML and create our first webpage!
+*Hypertext Markup Language, commonly known as HTML, is the language we use to create web pages. In this lesson, we will learn the basics of HTML and create our first webpage!*
 
 # Setting Up
 
@@ -40,7 +40,7 @@ So, after adding the `html›<!DOCTYPE>` declaration, we can add our first eleme
 
 ## The Head Tag
 
-The `head` element, which is what we will add next, is used to contain metadata, or the information about the webpage. For example, we can add a `title` element to the `head` element, which will contain the title of the webpage. In addition, we can add styles, scripts, and other metadata here, but we will just stick with the title element for now.    
+The `head` element, which is what we will add next, is used to contain metadata, or the information about the webpage. For example, we can add a `title` element to the `head` element, which will contain the title of the webpage. In addition, we can add styles, scripts, and other metadata here, but we will just stick with the title element for now.
 To add that, add the opening tag `html›<head>` to your file (and the closing tag if it doesn't get added correctly) and the title of the page in between the two tags. So, your code now should look like:
 ```html
 <!DOCTYPE html>
@@ -113,16 +113,18 @@ Tables in HTML consists of table rows, which contain table cells. To create a ta
 will render the table
 
 <table>
-    <tr>
-        <td>A</td>
-        <td>B</td>
-        <td>C</td>
-    </tr>
-    <tr>
-        <td>D</td>
-        <td>E</td>
-        <td>F</td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+        </tr>
+        <tr>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+        </tr>
+    </tbody>
 </table>
 
 Unfortunately, this table doesn't have any borders yet! But we can fix that in the next lesson when we learn about CSS.
@@ -149,16 +151,18 @@ To add header cells in your table, simply use the `html›<th>` for each heading
 will render the table
 
 <table>
-    <tr>
-        <th>A</th>
-        <th>B</th>
-        <th>C</th>
-    </tr>
-    <tr>
-        <td>D</td>
-        <td>E</td>
-        <td>F</td>
-    </tr>
+    <tbody>
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+        </tr>
+        <tr>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+        </tr>
+    </tbody>
 </table>
 
 ### Column Spanning
@@ -183,18 +187,32 @@ To make a table row span multiple columns, we will use the `html›colspan` attr
 will render the table
 
 <table style="border: 1px solid black;">
-    <tr style="border: 1px solid black;">
-        <th colspan='2' style="border: 1px solid black;">A</th>
-        <th style="border: 1px solid black;">C</th>
-    </tr>
-    <tr style="border: 1px solid black;">
-        <td style="border: 1px solid black;">D</td>
-        <td style="border: 1px solid black;">E</td>
-        <td style="border: 1px solid black;">F</td>
-    </tr>
+    <tbody>
+        <tr style="border: 1px solid black;">
+            <th colspan='2' style="border: 1px solid black;">A</th>
+            <th style="border: 1px solid black;">C</th>
+        </tr>
+        <tr style="border: 1px solid black;">
+            <td style="border: 1px solid black;">D</td>
+            <td style="border: 1px solid black;">E</td>
+            <td style="border: 1px solid black;">F</td>
+        </tr>
+    </tbody>
 </table>
 
 Your code won't have the borders show up, but don't worry! We will learn that in the next lesson. They are just added here to help visualize that the first table spans two columns.
+
+## Links
+
+To add links, use the `html›<a>` tag and set its `href` attribute to the link. 
+
+```html
+<a href="https://lew.sites.tjhsst.edu/">Visit Learning the Express Way here!</a>
+```
+
+results in 
+
+<a href="https://lew.sites.tjhsst.edu/">Visit Learning the Express Way here!</a>
 
 ## Lists
 
@@ -250,7 +268,7 @@ will show up as
 which can be unintended behavior. Instead, to add whitespaces, use `html›&nbsp;` to create a space.
 
 ```html
-<p>&nbsp;&nbsp;&nbsp;any&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spacers?</p>```
+<p>&nbsp;&nbsp;&nbsp;any&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spacers?</p>
 ```
 
 will show up as
@@ -268,5 +286,7 @@ These aren't really an HTML tag, but they are still important to know! Comments 
 <OtherInfo>
 Of course there's a lot more to HTML than this, but this lesson is just covering the basics! You can find so much more information online using a simple google search, or through using helpful resources such as [W3Schools](https://w3schools.com/) and [MDN Web Docs](https://developer.mozilla.org/en-US/).
 </OtherInfo>
+
+<br />
 
 Congratulations on creating your first webpage! In the next lesson, we will begin using Cascading Style Sheets (CSS), which helps you style and design your webpage.

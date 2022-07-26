@@ -58,6 +58,7 @@ module.exports = {
             options: {
               withWebp: true,
               linkImagesToOriginal: true,
+              wrapperStyle: 'margin-left: 0!important; margin-right: 0!important;',
             }
           },
           {

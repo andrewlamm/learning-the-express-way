@@ -19,9 +19,9 @@ const Heading = ({ lessonTitle, ...props }) => {
     `
   )
 
+  /* Determine lesson number */
   let lessonNumber = 0
   let currentLessonNumber = 0
-
   lessons.map((lesson, i) => {
     if (!lesson.extraLesson) {
       lessonNumber++
@@ -37,7 +37,7 @@ const Heading = ({ lessonTitle, ...props }) => {
       {...props}
       sx={{
           width: '100%',
-          bg: 'heading',
+          bg: 'headingbg',
           px: 3,
           paddingTop: 2,
           paddingBottom: 2,
@@ -45,7 +45,9 @@ const Heading = ({ lessonTitle, ...props }) => {
           borderLeft: '4px solid',
           borderColor: '#000000',
           flexDirection: 'column',
-          // width: '900px'
+          // width: '900px',
+          fontFamily: 'heading',
+          marginBottom: 3,
       }}
     >
       <Box
@@ -58,10 +60,10 @@ const Heading = ({ lessonTitle, ...props }) => {
       </Box>
       <Box
 				sx={{
-					marginTop: 1,
+					marginTop: '5px',
 					fontSize: [7, 8, null],
-					color: 'primary',
-					fontWeight: 100,
+					color: 'heading',
+					fontWeight: 200,
 				}}
     	>
         {lessonTitle}

@@ -3,4 +3,223 @@ title: Designing with CSS
 slug: /lesson/css
 ---
 
-# i love css
+*Now that we got our first site, let's start making it look nice through CSS!*
+
+# Basics
+
+In CSS, we use rulesets to style and design HTML elements. These rulesets contain a selector and its declarations, which consists of a property and a property value. An example ruleset is shown below.
+
+![](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics/css-declaration-small.png)
+
+In this ruleset, we select the `html›p`, or paragraph element. This means that all paragraphs in the HTML file that uses the ruleset will follow the delcarations found in it.
+The property here is `css›color`, which affects the color of the text. In this ruleset, we set the color of the text to be red, as defined in the property value.
+
+# Adding CSS
+
+Now that we know what CSS is, let's learn how to add it. There are three different ways to insert our CSS:
+
+- Externally, though a new `.css` file
+- Internally, inside the `html›head` element of our HTML file
+- Inline, through the attributes of an HTML element
+
+## External CSS
+
+The advantages of an external CSS file is that if you have many pages on a website that look similar, you can just change the css file and every page will update its style automatically.      
+To use external CSS, first create a new file with a `.css` extension, and then add your rulesets to it. Then you must link your CSS file to your HTML file using the `html›<link>` tag:
+
+```html
+<link rel="stylesheet" href="mystylesheet.css">
+```
+
+So, for example, if we had a stylesheet named `mystylesheet.css` that had:
+```css
+p {
+    color: green;
+}
+```
+
+and our HTML file was
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS!</title>
+        <link rel="stylesheet" href="mystylesheet.css">
+    </head>
+    <body>
+        <p>The color of this text is green!</p>
+        <p>The color of this text is also green!</p>
+    </body>
+</html>
+```
+
+then our text would be green.
+
+## Internal CSS 
+
+Internal CSS is advantagous for webpages that have a unique style. Simply add a `html›<style>` tag in the `html›head` element of your HTML file, and then add your rulesets inside it. An example is found below:
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS!</title>
+        <style>
+            p {
+                color: orange;
+            }
+        </style>
+    </head>
+    <body>
+        <p>The color of this text is orange!</p>
+        <p>The color of this text is also orange!</p>
+    </body>
+</html>
+```
+
+In here, the interal CSS file contains a ruleset that sets the color of text of all paragraphs to be green.
+
+## Inline CSS
+
+The final way to add CSS is to use inline CSS. This is advantagous for certain elements that have a different style. To add inline CSS, use the `html›style` attribute of an HTML element and then have its value be the CSS.
+So, to make a certain paragraph look green, we would have `html›<p style="color: blue;">`.
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS!</title>
+    </head>
+    <body>
+        <p style="color: blue;">The color of this text is blue!</p>
+        <p>The color of this text is not blue :(</p>
+    </body>
+</html>
+```
+
+## The CSS Hierarchy
+
+Okay, but what if we use both external and internal CSS? What will happen? Heck, let's throw in some inline CSS into the mix as well! Which CSS ruleset will be used? Well, the answer (thankfully) isn't that complicated.
+
+First of all, if the HTML element has inline CSS, then it will use the inline CSS. Otherwise, the order of when the external and internal CSS is listed determines which CSS ruleset is used. If the external CSS is listed first, then the internal CSS will be used, and vice versa.
+So, let's say we again have this stylesheet named `mystylesheet.css` that had:
+```css
+p {
+    color: green;
+}
+```
+
+If our HTML file was
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS!</title>
+        <link rel="stylesheet" href="mystylesheet.css">
+        <style>
+            p {
+                color: orange;
+            }
+        </style>
+    </head>
+    <body>
+        <p>The color of this text is orange!</p>
+    </body>
+</html>
+```
+then the text of the color will be orange. However, if we switched the `html›<link>` and `html›<style>` tags, like so:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS!</title>
+        <style>
+            p {
+                color: orange;
+            }
+        </style>
+        <link rel="stylesheet" href="mystylesheet.css">
+    </head>
+    <body>
+        <p>The color of this text is green!</p>
+    </body>
+</html>
+```
+
+then the color of the text will be green.
+
+# Different Selectors
+
+In addition to the basic element selector that selects all the elements of a certain type, CSS has some other selectors that select specific elements.
+
+## IDs and Classes
+
+IDs and classes are HTML attributes and are ways to specify certain HTML elements. IDs are completely unique; only one element can have a certain ID. On the other hand, classes do not have to be unique; multiple HTML elements can be apart of the same class, and these elements don't even have to be the same.     
+To use an ID, just use the `html›id='NAME'` attribute and to use a class, use the `html›class='NAME'` attribute. Using IDs and classes are a good way to classify certain elements and add CSS to those components without changing all of the same HTML elements.
+In CSS, use a `#` to specify an ID in the selector and a `.` to specify a class in the selector. For example
+```css
+#my-id {
+    color: blue;
+}
+.my-class {
+    color: red;
+}
+```
+will set the color of the element with the ID `my-id` to blue and will set all elements with the class `my-class` to red.
+
+## Attribute Selector
+
+Attribute selectors are used to select elements that have certain attributes. For example, if we wanted to select all elements that have the `html›class` attribute, we would use the selector `html›[class]`. If we wanted this to be more specifc, and only select the `html›p` elements that also had a `html›class` attribute, we would use the selector `html›p[class]`.
+
+## Pseudo-classes and Pseudo-elements
+
+Pseudo-classes are specific states of certain elements. For example, the `css›:hover` pseudo-class is used to select elements that are hovered over. The lessons dropdown list uses the `css›:hover` pseudo-class; whenever you hover over a lesson, the background gets darker! But when you stop hovering over that lesson link, the background returns back to what it was before.     
+Pseudo-elements select only a certain part of an element. For example, the `css›::before` pseudo-element is used to select the element that is before the element that is being selected.
+
+<OtherInfo>
+Remember, these are just the basics! There are many other selectors, including combinators. Additionally, there are more pseudo-classes and pseudo-elements than what we have covered. You can find a more comprehensive list of selectors [here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
+</OtherInfo>
+
+# CSS Properties
+
+## Sizing
+
+To set the size of a certain element, you can use the `css›width` and `css›height` properties. The value of these can either be a percentage value or a pixel value. For example, a `css›width` of `100%` will make the element take up the full width of the parent element, and a `css›height` of `100px` will make the element take up 100 pixels of height.
+
+## Spacing
+
+In HTML, each element consists of four different parts, as shown in the picture below
+
+![](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model/boxmodel-(3).png)
+
+The `css›width` and `css›height` properties we discussed in the previous section set the size of the content box. The `css›margin` property is used to set the space around the element, and the `css›padding` property is used to set the space inside the element but outside the content box. Both `css›margin` and `css›padding` have `-left`, `-top`, `-right`, and `-bottom` properties, which are used to set the `css›margin` and `css›padding` on the left, top, right, and bottom sides of the element. For example, the `css›margin-top` property sets the space above the element.        
+Also, for both `css›margin` and `css›padding`, if the value is only one number (i.e. `1px`), then all four sides will have the same spacing value. If there are two values (i.e. `1px 2px`), then the top and bottom sides will have the same spacing value (first value), and the left and right sides will have the same spacing value (second value). If there are three values (i.e. `1px 2px 3px`), then the top will have the spacing of the first value, the left and right side will have the same spacing with the second value, and the bottom side has the spacing of the thirt value. Finally, if there are four values (i.e. `1px 2px 3px 4px`), then the top side will have the first value, the right side has the second value, the bottom will have the third value, and left side will have the last value.
+
+## Fonts
+
+To set the color of the text, use `css›color: COLOR`. The color can be a hex code, an rgb/rgba value, a hsl/hsla value, or a common color name (red, green, ect.) 
+To set the font of an element, you can use the `css›font-family` property. The value of this property is a comma-separated list of font names. For example, the value `css›font-family: "Arial", "Helvetica", sans-serif` will first set the font of the element to Arial. If the user does not have that font installed, then it will try using Helvetica, and if it doesn't have that font, it will try the next font, which here is the default sans-serif font on their machine.       
+To set the font weight to make an element text be bolded/lighter, use the `css›font-weight` property. You can use text values such as `bold` or `normal`, or use number values such as `700` (bold) or `400` (normal).        
+To add an underline to the element, add `css›text-decoration: underline` to the element. For a dotted underline, use `css›text-decoration: underline dotted`.       
+To italicize text, use `css›font-style: italic`.
+
+## Background
+
+Change the color of the background simply by using `css›background: COLOR`. Same as the color of the text, it can be a hex code, an rgb/rgba value, a hsl/hsla value, or a common color name (red, green, ect.)        
+Or, we can set the background image by using `css›background: url(IMAGE_URL)`. The image will be stretched to fill the entire element. If you want the background image to repeat, use `css›background: url(IMAGE_URL) repeat`, and if you only want it to repeat only in the x axis, use `css›background: url(IMAGE_URL) repeat-x`. Replace `css›repeat-x` with `css›repeat-y` if you only want the background image to repeat in the y axis.
+
+## Borders
+
+Borders can be added to any element, not just tables! To add it, use the property value `css›border: WIDTH STYLE COLOR`. The `WIDTH` is the width of the border, and the `STYLE` is the style of the border, such as `css›solid`, `css›dashed`, `css›dotted`, or `css›double`. The `COLOR` is the color of the border. The `STYLE` and `COLOR` parameters are not required.
+
+<br />
+
+<OtherInfo>
+Again, this is just a short list of the many CSS properties out there. Additionally, not all variations of the parameters for the properties are covered as well. You can find a more comprehensive list of CSS properties [here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties), or by just simply searching up a certain CSS property.
+</OtherInfo>
+
+<br />
+
+You have now learned how to use CSS to design your webpage. In the next lesson, we will begin introducing javascript to create interactive web content.

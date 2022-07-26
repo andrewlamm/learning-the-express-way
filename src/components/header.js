@@ -7,6 +7,8 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 import Hamburger from 'react-hamburger-menu'
 
 const Header = ({ ...props }) => {
+
+  /* Obtain data */
   const {
     allLessonListYaml: { nodes: lessons },
     allMdx: { edges: lessonslug }
@@ -33,41 +35,43 @@ const Header = ({ ...props }) => {
     `
   )
 
+  /* Drop down menu */
   const [dropdown, setDropdown] = useState(false)
   const [focused, setFocused] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
-  let lessonNumber = 1
+  let lessonNumber = 1 // Used for incrementation
 
+  /* Link lesson title to URL */
   const titleToLink = {}
-
   lessonslug.forEach(lesson => {
     titleToLink[lesson.node.frontmatter.title] = lesson.node.frontmatter.slug
   })
 
   return (
-    <Flex
+    <Flex // Header
       {...props}
       sx={{
           width: '100%',
           background: '#000000',
           paddingLeft: 3,
-          paddingTop: 2,
-          paddingBottom: 2,
+          paddingTop: '10px',
+          paddingBottom: '10px',
           flexDirection: 'row',
           alignItems: 'center',
           position: 'relative',
           zIndex: 0,
+          fontFamily: 'heading',
       }}
       id="header"
     >
       <Box
         sx={{
-          fontSize: [3, 5, 5],
+          fontSize: [3, '21px', null],
           color: 'primary',
           bg: '#000000',
-          marginRight: 4,
-          fontWeight: 700,
+          marginRight: '48px',
+          fontWeight: 600,
           textDecoration: 'none',
         }}
       >
@@ -82,7 +86,7 @@ const Header = ({ ...props }) => {
           Learning the Express Way
         </Link>
       </Box>
-      <Hamburger
+      <Hamburger // Mobile only
         isOpen={isOpen}
         menuClicked={useCallback(() => {
           setIsOpen((open) => !open)
@@ -99,7 +103,7 @@ const Header = ({ ...props }) => {
           marginRight: 3,
         }}
       />
-      <Flex
+      <Flex // Links in header
         sx={{
           flexDirection: ['column', 'row', null],
           position: ['absolute', 'static', null],
@@ -114,21 +118,21 @@ const Header = ({ ...props }) => {
           transform: isOpen ? 'translateY(0)' : ['translateY(-200%)', 'translateY(0)', null],
           transition: 'transform 0.2s linear',
           zIndex: -1,
+          fontFamily: 'heading',
         }}
       >
         <Box
           sx={{
             fontSize: 3,
-            color: 'dark',
-            fontFamily: 'body',
-            marginRight: 4,
+            color: '#ffffff',
+            marginRight: '40px',
             textDecoration: 'none',
           }}
         >
           <Link
             to='/guide'
             sx={{
-              color: 'dark',
+              color: '#ffffff',
               textDecoration: 'none',
             }}
           >
@@ -138,7 +142,7 @@ const Header = ({ ...props }) => {
         <Box
           sx={{
             position: 'relative',
-            marginRight: 4,
+            marginRight: '40px',
           }}
           onFocus={ () => setFocused(true) }
           onBlur={ (event) => {
@@ -151,11 +155,14 @@ const Header = ({ ...props }) => {
           <Button
             sx={{
               fontSize: 3,
-              color: 'dark',
-              fontFamily: 'body',
+              color: '#ffffff',
               background: '#000000',
               padding: 0,
               cursor: 'pointer',
+              fontFamily: 'heading',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
             onClick={ () => setDropdown(!dropdown) }
             id="lessonDropdown"
@@ -171,11 +178,10 @@ const Header = ({ ...props }) => {
               display: (dropdown) ? 'inherit' : 'none',
               position: ['static', 'absolute', null],
               top: 'calc(100% + 13.5px)',
-              bg: ['#000000', 'dark', null],
-              borderBottomLeftRadius: 4,
-              borderBottomRightRadius: 4,
-              paddingTop: 0,
-              paddingBottom: 0,
+              bg: ['#000000', '#ffffff', null],
+              borderRadius: '5px',
+              paddingTop: '7px',
+              paddingBottom: '7px',
               zIndex: 999,
               transition: '0.2 linear',
               width: ['auto', 'max-content', null],
@@ -190,20 +196,25 @@ const Header = ({ ...props }) => {
                 key={i}
                 to={titleToLink[lesson.title]}
                 sx={{
-                  paddingTop: 1,
-                  paddingBottom: 1,
-                  paddingLeft: [0, 2, null],
-                  paddingRight: 2,
+                  py: '3.5px',
+                  // ':last-child': {
+                  //   paddingBottom: '12px',
+                  // },
+                  // ':first-child': {
+                  //   paddingTop: '12px',
+                  // },
+                  paddingLeft: [0, '15px', null],
+                  paddingRight: '20px',
                   textDecoration: 'none',
                   display: 'block',
                   color: ['dark', '#000000', null],
                   '&:hover': {
-                    bg: 'secondarydark',
+                    bg: 'highlight',
                   },
                   fontSize: 2,
                 }}
               >
-                Lesson {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
+                {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
               </Link>
             ))}
           </Box>
@@ -211,8 +222,7 @@ const Header = ({ ...props }) => {
         <Box
           sx={{
             fontSize: 3,
-            color: 'dark',
-            fontFamily: 'body',
+            color: '#ffffff',
             marginRight: 4,
             textDecoration: 'none',
           }}
@@ -220,7 +230,7 @@ const Header = ({ ...props }) => {
           <Link
             to='/contributing'
             sx={{
-              color: 'dark',
+              color: '#ffffff',
               textDecoration: 'none',
             }}
           >
