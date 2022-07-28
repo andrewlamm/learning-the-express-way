@@ -11,9 +11,7 @@ You can look at the source markdown file [here](https://github.com/superandybean
 
 ### Heading 3
 
-#### Heading 4
-
-Headings 5 and 6 do work, but the styling may be messed up! Also, the table of contents only works for up to heading 2.
+Headings 4-6 do work, but the styling will be messed up! Also, the table of contents only works for up to heading 2.
 
 > Blockquote
 > 
@@ -67,4 +65,4 @@ Want a horizontal line? Use three dashes like so:
 
 Since this is an md file, not an mdx file, you cannot use the other added textbook elements.     
 
-Don't worry about the preivous lesson button below; it's acting weird because this page isn't an actual lesson.
+Don't worry about the previous lesson button below; it's acting weird because this page isn't an actual lesson.

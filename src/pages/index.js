@@ -31,6 +31,7 @@ const IndexPage = () => {
             textAlign: 'center',
             fontSize: [5, 7, null],
             fontWeight: 700,
+            fontFamily: 'heading',
           }}
         >
           Welcome to <Themed.b>Learning the Express Way!</Themed.b>

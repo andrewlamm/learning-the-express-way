@@ -1,4 +1,5 @@
 // import '@fontsource/inter'
+import '@fontsource/open-sans'
 
 const theme = {
   space: [0, 4, 8, 16, 32, 64, 96, 128, 256, 512],
@@ -14,13 +15,13 @@ const theme = {
     text: '#000000',
     background: '#ffffff',
     primary: '#e5989b',
-    secondary: '#bc5151',
     accent: '#6d6875',
-    secondarydark: '#818181',
-    headingbg: '#fAf9f7',
-    heading: '#b3808a',
-    sidebar: '#f3f2f1',
     highlight: '#f0dbdc',
+    headingbg: '#f8f8f8',
+    heading: '#a9707b',
+    sidebar: '#f2f2f2',
+    boxoutline: '#cccccc',
+
   },
   styles: {
     root: {
@@ -41,7 +42,7 @@ const theme = {
       marginTop: '36px',
       marginBottom: 0,
       fontFamily: 'heading',
-      fontWeight: 230,
+      fontWeight: 240,
       fontSize: '32px',
       color: 'heading',
     },
@@ -51,19 +52,14 @@ const theme = {
       fontFamily: 'body',
       fontSize: '20px',
       fontWeight: 600,
-      color: 'heading',
+      color: '#98646e',
     },
     h3: {
       marginTop: 3,
       marginBottom: 2,
       fontFamily: 'body',
       color: 'heading',
-    },
-    h4: {
-      marginTop: 3,
-      marginBottom: 2,
-      fontFamily: 'body',
-      color: 'heading',
+      fontSize: 3,
     },
     p: {
       marginTop: '6px',

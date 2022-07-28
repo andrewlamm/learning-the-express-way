@@ -3,10 +3,259 @@ title: Starting with Express
 slug: /lesson/express
 ---
 
-# Express
+*Time to begin using a backend server with Express.*
 
-LETS GOOOOO
+# Installation
+
+Firstly, we must install Node.js if we have not already which we can do so [here](https://nodejs.org/en/download/). The Node.js installation will also install `npm`, which will be our package manager, allowing us to install Javascript packages such as Express. To confirm that both Node.js and npm have been installed correctly, run these two commands
+```
+node --version
+npm --version
+```
+and if they print the version numbers, we are good to go.
+
+# Initializing
+
+When we create our first application, first create a new folder where the files will be stored. Then, inside a terminal run the following command:
+```
+npm init
+```
+<TipBox>
+Make sure you are in the right directory in your terminal! You can navigate to the folder you want to create by using the `cd` command.
+</TipBox>
+Then, fill in the prompts provided; many of the fields can be left empty and those will be set to its default value. After you confirm the settings, the file `package.json` should appear in your folder. After that is done, we must install a package using the 
 
 ```
-nyoom
+npm i [PACKAGE_NAME]
 ```
+
+command. So, to install Express, we will run 
+
+```
+npm i express
+```
+
+Then, we will make a file in the folder called `index.js` which will be where most of our code for our server will be written. In that file, add the following code:
+
+```js
+const express = require('express')
+const app = express()
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(3000, () => {
+  console.log(`Example server started`)
+})
+```
+
+Save the file, and then in terminal run the command 
+```
+node index.js
+```
+Then, you can visit the page at http://localhost:3000/. You should see a page that just says `Hello World!`. To stop the server, do Ctrl+C.
+
+<DirectorBox>
+In [Director](https://director.tjhsst.edu/), press the "Create Site" button again and fill out the form. However, this time choose "Dynamic" in the Type dropdown. After creating the site, select "Customize Docker Image" button on the site settings page, and on there select the " Node.js (Alpine)" option and click on the "Write run.sh file?" checkbox. Save the image, and then in the online terminal create a new file `index.js` in the `public` folder and copy paste the file above, with one exception. Replace the `3000` on line 8 with `process.env.PORT`. Save the file, and then either click on the "Restart Process" button on the site settings page or press Alt+Enter to restart the server. After the server has finished running, visit the site URL and you should see "Hello World!" 
+</DirectorBox>
+
+Okay, so what just happened in those 10ish lines of code? Well, on the first line the `js›require()` methods loads the Express module, which we then initialize on the second line. Let's skip the middle few lines for right now and discuss the last three lines. The last three lines cause the server to listen on port 3000 for connections, which is why when you visit localhost:3000 you get the webpage. Lastly, the middle few lines manage the **endpoints** of the server.        
+
+# Endpoints
+
+An endpoint is a route that the server listens for. In this case, the server listens for a request to the root of the server, which is `/`. When the server receives a request to the root, it will send the message `Hello World!`.       
+There are many functions that define these endpoints, but the most common ones are `js›get()` and `js›post()`. The first one is a GET request, and the second one is a POST request. When visiting a site, you will be sending a GET request, so most of the time you will be using the `js›get()` method. POST methods usually are used when submitting forms, whcih we will discuss in a few sections below.
+<OtherInfo>
+We won't go over the details of GET vs POST here, but you can find more info about that [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods).
+</OtherInfo>
+The arguments (inside the parantheses) are the actual endpoints. So if in our code we add the lines
+
+```js
+app.get('/test', (req, res) => {
+  res.send('This is a test.')
+})
+```
+then the server will listen for a request to `/test` and respond with the message `This is a test.` if you visit localhost:3000/test. Note that when making changes to the server, you will need to restart the server to see the changes. However, if you are making changes to the `.html` (or the `.hbs` files in the next lesson), a restart is not necessary—a simple refresh will suffice.   
+
+Inside the `js›get()` function, we have the function `send()`, which just sends a message to the client. If we wanted to have the website display an HTML file, we would use the `js›sendFile()` method. For example, if we had a file name `index.html` and wanted it to be displayed at the route `/test`, we would add
+
+```js
+app.get('/test', (req, res) => {
+  res.sendFile('index.html', { root: __dirname }) // the root is necessary for the application to locate the file
+})
+```
+
+When we want to render HTML templates (like we will be doing in the next lesson with handlebars), we will use the `js›render()` function. We will talk about that more in the next lesson.         
+Finally, when we want to redirect the user to another route, we will use the `js›redirect()` method. So, for example, let's say after a user has successfully logged in and we want to redirect them to the home page, we would do use`js›redirect(/)` method in the same endpoint with the logging in function.
+
+## Wildcards
+
+You don't have to specify a specific endpoint for every request. Instead, we can use wildcards for more general routes using `:`. Let's give an example.
+
+```js
+app.get('/test/:id', (req, res) => {
+  res.send(`This is a test with id ${req.params.id}`)
+})
+```
+
+`req.params.id` gets the `id` parameter from the route. So, when we visit localhost:3000/test/1, we will get the message `This is a test with id 1`.     
+
+We can use `?` to make a parameter optional. For example, if we wanted to make the `id` parameter optional, we would add
+
+```js
+app.get('/test/:id?', (req, res) => {
+  if (req.params.id) {
+    res.send(`This is a test with id ${req.params.id}`)
+  } else {
+    res.send('This is a test without an id')
+  }
+})
+```
+
+Then, if we visit localhost:3000/test/1, we still get the message `This is a test with id 1`. However, if we visit localhost:3000/test, we will get the message `This is a test without an id`.   
+Finally, `*` allows us to use a wildcard within a route path. So, if we wanted to make a route that matches any route, we would add
+
+```js
+app.get('/*', (req, res) => {
+  res.send('This is a wildcard route') 
+})
+```
+
+Then, any route to localhost:3000 will get the message `This is a wildcard route`. 
+
+<TipBox>
+If there are duplicate possible endpoints for a certain route, the first one is picked. So, if we wanted to make an error page for routes that don't exist, we would add the `*` wildcard at the bottom.
+</TipBox>
+
+## req and res
+
+`req` and `res` are both objects defined by express and are passed to the endpoint function. The `req` object contains information about the request, such as the URL and request method. The `res` object will contain information about the response. We can add our own variables to these objects, and those will persist throughout the request. This is useful when you want to store data that will be sent back to the user during a request cycle.
+
+# Forms
+
+We'll take a short break from Express and talk about HTML forms real quick. Forms are defined with the `html›form` tag, and most inputs are defined with the `html›input` tag, with the type attribute setting the type of input. Addtionally, inputs have the `name` attribute, which is the name of the input and is used for the server to get the information from the submitted form.    
+Labels are an HTML element that help label an input. It's benefit is that touching the label of an input selects the input as well, helping with clicking small inputs such as radio inputs. When using the `html›<label>` tag, the `for` attribute must match the `id` attribute of the input it is binding with.
+The table below shows some common input types and their results.
+
+| HTML | Output |
+-----------------------------|------------------------
+| `html›<input type="text">` | <input type="text" /> |
+| `html›<input type="radio">` | <input type="radio" /> |
+| `html›<input type="checkbox">` | <input type="checkbox" /> |
+| `html›<input type="button" value="text">` | <input type="button" value="text" /> |
+| `html›<input type="submit">` | <input type="submit" /> |
+
+Radio inputs only allow one selection for each set of radio inputs, while checkboxes allow multiple. They both have a `value` attribute which represent the value of the option. Radio and checkbox inputs must share the same `name` attribute to link them together. So, for example,
+
+```html
+<input type="radio" id="cat" name="animal" value="Cats" />
+<label for="cat">Cats</label><br>
+<input type="radio" id="dog" name="animal" value="Dogs" />
+<label for="dog">Dogs</label><br>
+<input type="radio" id="both" name="animal" value="Both" />
+<label for="both">Both</label>
+```
+
+results in 
+
+<input type="radio" id="cat" name="animal" value="Cats" />
+<label for="cat">Cats</label><br />
+<input type="radio" id="dog" name="animal" value="Dogs" />
+<label for="dog">Dogs</label><br />
+<input type="radio" id="both" name="animal" value="Both" />
+<label for="both">Both</label>
+
+Notice that only one of the buttons can be selected at a time.    
+
+Dropdown lists are made through the `html›<select>` tag, and all the options for the list have the `html›<option>` tag and are located inside the `html›<select>` tag. The `html›<option>` tag has the `value` attribute, which is the value of the option. So, for example
+
+```html
+<select id='animal'>
+  <option value="Cats">Cats</option>
+  <option value="Dogs">Dogs</option>
+  <option value="Both">Both</option>
+</select>
+```
+
+results in 
+
+<select id='animal'>
+  <option value="Cats">Cats</option>
+  <option value="Dogs">Dogs</option>
+  <option value="Both">Both</option>
+</select>
+
+Also, large text area is defined by the `html›<textarea>` tag. Again, this has the `name` attribute. Additionally, it has `row` and `col` attributes that define the size of the text area.
+
+```html
+<textarea name="message">
+  Default text here
+</textarea>
+```
+
+results in 
+
+<textarea name="message" defaultValue="Default text here" />
+
+Finally, the submit button submits the form. It sends the data of the form to the route found in the `action` attribute found in the `html›<form>` tag, and the method that the data is being sent to is defined by the `method` attribute in the `html›<form>` tag.     
+
+Alright, that's the gist of HTML forms. Let's use Express to obtain the form data. First, we will install the `body-parser` package by doing `npm i body-parser` in your terminal. Then, add the following lines at the top of your application file:
+
+```js
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+```
+
+Then, we will create a new route, and depending on the method of the request, we'll handle the request differently: if the method is GET, we will use the `js›get()` method, and if the method is POST, we will use the `js›post()` method. To get the data from the form, we'll use the `req.body` object. So, if in the HTML form we have
+```html
+<form action="/submit_form" method="POST">
+  <input type="text" name="name" />
+  <input type="submit" value="Submit" />
+</form>
+```
+
+and our `index.js` file was
+
+```js
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: __dirname })
+})
+
+app.post('/submit_form', (req, res) => {
+  res.send(`Hello ${req.body.name}`)
+})
+
+app.listen(3000, () => {
+  console.log(`Example server started`)
+})
+```
+
+When running the server, after filling out and submitting the form, you'll see the message `Hello <NAME>` on the webpage, where `NAME` should be the name you inputted.
+
+# Middleware
+
+Middleware are functions that are called during a request to the server. They have access to the `req` and `res` objects and run sequentially. To call the next function in a middleware function, we use the `js›next()` method. To make a request call middleware, we will just need to add the functions in an array in the second argument of the `js›get` method. 
+
+```js
+function myMiddleware(req, res, next) {
+  console.log('This is my middleware')
+  next() // we need this to call the next function in the chain
+}
+
+function mySecondMiddleware(req, res, next) {
+  console.log('request url: ' + req.originalUrl) // prints the request url using the req object
+  next() // calls the next function
+}
+
+app.get('/', [myMiddleware, mySecondMiddleware], (req, res) => { // we have the two middleware functions in an array
+  res.send('Hello World!') // prints 'This is my middleware' first and then 'request url: /'
+})
+```
+
+Now that we got the basics of Express down, let's start using handlebars and generating HTML.

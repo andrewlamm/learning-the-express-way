@@ -11,37 +11,46 @@ const TipBox = ({ children, ...props }) => {
       {...props}
       sx={{
         flexDirection: 'column',
-        mt: 2,
+        mt: '26px',
+        bg: '#fffcf6',
       }}
     >
       <Box
         sx={{
-          backgroundColor: '#037d50',
           fontSize: 4,
           fontWeight: 700,
-          py: 2,
           px: 3,
-          // borderRadius: '20px 20px 0px 0px',
+          pt: '10px',
+          pb: '4px',
+          borderRadius: 0, // isOpen ? '5px 5px 0px 0px' : '5px 5px 5px 5px',
           border: 'solid',
-          borderWidth: '1px 1px 0 1px',
+          borderColor: 'boxoutline',
+          borderLeftColor: '#FFE6A7',
+          borderWidth: isOpen ? '0px 0px 0 5px' :'0px 0px 0px 5px',
+          // cursor: 'pointer',
         }}
-        onClick={() => setIsOpen(!isOpen)}
+        // onClick={() => setIsOpen(!isOpen)}
       >
-        TIP
+        Tip
       </Box>
       <Box
         sx={{
-          fontSize: 2,
-          pt: 1,
-          pb: 2,
+          pt: 0,
+          pb: '11px',
           px: 3,
-          // borderRadius: '0px 0px 20px 20px',
+          borderRadius: 0, //'0px 0px 5px 5px',
           border: 'solid',
-          borderWidth: '0 1px 1px 1px',
+          borderColor: 'boxoutline',
+          borderLeftColor: '#FFE6A7',
+          borderWidth: '0 0px 0px 5px',
           display: (isOpen) ? 'inherit' : 'none',
         }}
       >
-        <Markdown>
+        <Markdown
+          sx={{
+            fontSize: [2, '17px', null]
+          }}
+        >
           {children}
         </Markdown>
       </Box>

@@ -3,4 +3,210 @@ title: Advanced Javascript
 slug: /lesson/jsadvanced
 ---
 
-# advanced js
+*Some more advanced Javascript topics.*
+
+# Objects
+
+Objects in Javascript are defined using curly brackets `{}`. An object can contain many properties, and each property has its values. Additionally, objects can have functions. To access the value of a property, use either dot notation or through square brackets.
+
+```js
+const animal = {
+    type: 'cat', // type property
+    name: 'Panko', // name property
+    age: 4, // age property
+    greeting: function() { // greeting function
+        console.log('Hello, my name is ' + this.name + ' and I am a ' + this.type + '.');
+        // The this keyword refers to the object itself
+    }
+}
+
+// Note that whitespace does not matter when defining objects
+
+console.log(animal.type); // cat
+console.log(animal.greeting()) // Hello, my name is Panko and I am a cat.
+```
+
+To iterate through an object, we must use a `js›for...in` loop.
+
+```js
+const animal = {
+    type: 'cat', // type property
+    name: 'Panko', // name property
+    age: 4, // age property
+}
+
+for (const property in animal) {
+    console.log(property + ': ' + animal[property]);
+}
+
+// type: cat
+// name: Panko
+// age: 4
+```
+
+# Maps and Sets
+
+Maps and sets behave similarly to other programming langauges. Maps are objects have key-value pairs, where each key is unique and has a value. Sets are objects that store distinct values—no duplicates allowed!
+
+To define a map, use the `new Map()` constructor. To add and edit a key-value pair, use the `js›set()` method. To get the value of a key, use the `js›get()` method. To check if a key exists, use the `js›has()` method. To find the size of a map, use its `js›.size` property. To delete a key, use the `js›delete()` method. To iterate through a map, use the `js›forEach()` method.         
+
+```js
+const m = new Map() // m is now a Map
+m.set('a', 1)
+m.set('b', 2)
+m.set('c', 3)
+
+console.log(m.has('a')) // true
+console.log(m.has('d')) // false
+
+console.log(m.get('b')) // 2
+
+console.log(m.size) // 3
+m.delete('b')
+console.log(m.size) // 2
+
+m.forEach(function(val, key) {
+    console.log(key + ': ' + val)
+})
+// a: 1
+// c: 3
+```
+
+<OtherInfo>
+You might notice that maps are pretty similar to objects, but they do have their differences! For example, the keys of maps can be of any data type while the properties of objects must be a string. Additionally, maps use the `forEach()` method to iterate while objects use a `for...in` loop.
+</OtherInfo>
+
+<Warning>
+While using dot notation and square notation on a Map does not throw an error, it won't give you the expected result! Instead, those will edit the properties of the Map object, not the keys itself. So, when editing the values of the Map, remember to use the `js›set()` method.
+</Warning>
+
+To define a set, use the `new Set()` constructor. Sets is an object that acts as a collection of values, and all the values in a set must be unique. If you try adding a duplicate value to a set, nothing happens.     
+To add values to a set, use the `js›add()` method. To check if a value exists in a set, use the `js›has()` method. To find the size of a set, use its `js›.size` property. To delete a value from a set, use the `js›delete()` method. To iterate through a set, you can use the `js›forEach()` method or a `js›for...in` loop.
+
+```js
+const s = new Set() // s is now a Set
+s.add(4)
+s.add(14)
+s.add(38)
+s.add(1)
+
+console.log(s.has(4)) // true
+console.log(s.has(5)) // false
+
+console.log(s.size) // 4
+s.delete(4)
+console.log(s.size) // 3
+
+s.forEach(function(val) {
+    console.log(val)
+}) // 14 38 1
+
+for (const val of s) {
+    console.log(val)
+} // 14 38 1
+
+```
+
+# Async Functions and Promises
+
+An async function is one that defined with the `js›async` keyword, and these functions allow for the `js›await` keyword. The `js›await` keyword is used to wait for a promise to resolve. A promise is an object that represents the completion or a failure of an asynchronous function (one that runs in the background, allowing other tasks to be done still). Basically, the function will wait at the the `js›await` keyword it recieves a promise, where then it continues to execute the function. 
+These functions are extremely useful for pausing a script for a certain amount of time or to wait for an important function to finish running.
+
+```js
+async function doSomething() { // async allows us to use the await keyword
+    console.log('Hello')  // prints Hello in console
+    await waitForTwoSeconds() // we pause everything and wait for the function to resolve a promise
+    console.log('World') // prints World in console after 2 seconds
+}
+
+function waitForTwoSeconds() {
+    return new Promise((resolve) => { // this creates a promise
+        setTimeout(function() {
+            resolve()
+        }, 2000) // the promise will resolve after 2000 ms (2 secs)
+    })
+}
+```
+
+Depending on how your code is structured, the order that the functions are executed can be different. Here's an example:
+
+```js
+function waitForOneSecond() {
+    return new Promise((resolve) => { // this creates a promise
+        setTimeout(function() {
+            resolve('1 sec')
+            console.log('1 sec promise done')
+        }, 1000) // the promise will resolve after 1000 ms (1 sec)
+    })
+}
+
+function waitForTwoSeconds() {
+    return new Promise((resolve) => { // this creates a promise
+        setTimeout(function() {
+            resolve('2 secs')
+            console.log('2 secs promise done')
+        }, 2000) // the promise will resolve after 2000 ms (2 secs)
+    })
+}
+```
+
+Try copy-pasting the two functions above and the code below into your own code and see what happens!
+
+```js
+async function runSequence() {
+    console.log("sequence")
+
+    // step (1) gets here really fast
+    const two = await waitForTwoSeconds() // pauses here until 2 secs promise resolves
+    // prints '2 secs promise done' 2 seconds after (1)
+    console.log(two) // prints '2 secs` 2 seconds after (1), immedaiately after '2 secs promise done'
+
+    const one = await waitForOneSecond() // pauses here until 1 secs promise resolves
+    // prints '1 secs promise done' 3 seconds after (1)
+    console.log(one) // prints '1 sec' 3 seconds after (1), immedaiately after '1 secs promise done'
+}
+
+async function runConcurrent() {
+    console.log("concurrent")
+
+    const two = await waitForTwoSeconds()
+    const one = await waitForOneSecond() // runs both of these functions immediately
+    // step (1) gets here really fast
+
+    // prints '1 sec promise done' 1 second after (1)
+    // prints '2 sec promise done' 2 seconds after (1)
+
+    console.log(await two) // prints '2 secs' 2 seconds after (1), immediately after '2 sec promise done'
+    console.log(await one) // prints '1 sec' 2 seconds after (1), immediately after '2 secs'
+    /* it will print '1 sec' immediately after '2 secs' because the waitForOneSecond function already completed and was 
+    waiting for the promise from waitForTwoSeconds to resolve */
+}
+
+runSequence() // runs the runSequence function
+setTimeout(runConcurrent, 4000) // runs the runConcurrent function after 4 seconds, so after runSequence is done running
+```
+
+<OtherInfo>
+This was a very, very introduction to Promises and async functions, and there's much more out there! A more thorough explanation [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
+</OtherInfo>
+
+# API Calls
+
+We use API calls to obtain request data from another application. To do an API call, we use the `js›fetch()` method. A simple example is found below:
+
+```js
+fetch('LINK').then((reponse) => 
+    response.json()).then((data) => {
+        console.log(data)
+    }
+)
+```
+
+The `js›fetch()` method takes in the request URL and returns a promise when the request is complete. The promise will resolve with the response data, which we then turn into a JSON object (which acts just like a normal Javascript object) through the `js›json()` method which is in the `data` variable.
+From there, we can do whatever we want with the data! In the example code above all we do is print the data to the console, but we can do many other things such as displaying it on our webpage (remember the `js›.innerHTML` property we talked about in the last lesson?) 
+
+<Warning>
+Not all API calls will work in Javascript, and you may run into a `CORS header 'Access-Control-Allow-Origin' missing` error. Unfortunately, there is no good fix for this error except for making the API call on a backend server... which fortunately is our next lesson! 
+</Warning>
+
+We got a pretty good understanding of Javascript now, so let's move on to the next step: creating a backend server using Express.

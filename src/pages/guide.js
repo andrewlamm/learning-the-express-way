@@ -40,7 +40,9 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
       <Box
         sx={{
           my: 2,
-          mx: 4,
+          width: '100%',
+          // mx: 4,
+          // fontFamily: 'Arial, sans-serif',
         }}
       >
         <Flex
@@ -53,8 +55,8 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
             <Flex
               key={i}
               sx={{
-                width: '80%',
-                mb: '30px',
+                width: '72.5%',
+                mb: '10px',
                 mt: '20px',
                 flexDirection: 'column',
                 // alignItems: 'center',
@@ -62,8 +64,8 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
             >
               <Themed.h1
                 sx={{
-                  mt: 2,
-                  mb: 1,
+                  mt: '12px',
+                  mb: '13px',
                   fontSize: [5, 7, null],
                   textAlign: 'center',
                   fontFamily: 'heading',
@@ -83,8 +85,8 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
                   <Box
                     key={j}
                     sx={{
-                      mt: 1,
-                      mb: 1,
+                      mt: '3px',
+                      mb: '9px',
                     }}
                   >
                     <Box
@@ -99,7 +101,7 @@ const GuidePage = ({ data: { allGuideYaml: { nodes: guides } , allLessonListYaml
                           color: '#000000',
                         }}
                       >
-                        <span sx={{fontWeight: 700,}}>Lesson {lesson.extraLesson ? 'EX' : lessonNumber++}:&nbsp;</span>{lesson.title}
+                        <span sx={{fontWeight: 900, fontFamily: 'heading', fontSize: '16.5px'}}>LESSON {lesson.extraLesson ? 'EX' : lessonNumber++}:&nbsp;</span><span sx={{fontWeight: 800, fontFamily: 'heading', fontSize: '17.5px',}}>{lesson.title}</span>
                       </Link>
                     </Box>
                     <Box>

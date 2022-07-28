@@ -24,7 +24,7 @@ const Codeblock = ({ children, ...props })  => (
       wordSpacing: 'normal',
       wordBreak: 'normal',
       wordWrap: 'normal',
-      backgroundColor: '#eeeeee',
+      backgroundColor: 'sidebar',
       px: 1,
       fontSize: 2,
       overflowX: 'auto',

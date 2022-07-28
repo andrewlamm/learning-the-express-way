@@ -18,8 +18,9 @@ import NavFooter from '../components/textbook/navFooter'
 import Warning from '../components/textbook/warning'
 import OtherInfo from '../components/textbook/otherInfo'
 import TipBox from '../components/textbook/tipBox'
+import DirectorBox from '../components/textbook/director'
 
-const mdxComponents = { Warning, OtherInfo, TipBox }
+const mdxComponents = { Warning, OtherInfo, TipBox, DirectorBox }
 
 const LessonPage = ({ data: { mdx: post } }) => {
   const {
@@ -34,22 +35,24 @@ const LessonPage = ({ data: { mdx: post } }) => {
   const sidebarRef = useRef(null)
 
   useEffect(() => {
-    const sidebar = document.getElementById('sidebar')
-    const header = document.getElementById('header') // Use getElementByID as the Ref occasionally breaks when scrolling to the bottom of the page?
-    sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
-    sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
-    document.addEventListener('scroll', _ => {
-      // console.log(window.scrollY)
-      // console.log(header.offsetHeight)
-      if (window.scrollY < header.offsetHeight) {
-        sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
-        sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
-      }
-      else {
-        sidebar.style.maxHeight = '100vh'
-        sidebar.style.minHeight = '100vh'
-      }
-    })
+    if (window.screen.width > 640) {
+      const sidebar = document.getElementById('sidebar')
+      const header = document.getElementById('header') // Use getElementByID as the Ref occasionally breaks when scrolling to the bottom of the page?
+      sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+      sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+      document.addEventListener('scroll', _ => {
+        // console.log(window.scrollY)
+        // console.log(header.offsetHeight)
+        if (window.scrollY < header.offsetHeight) {
+          sidebar.style.maxHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+          sidebar.style.minHeight = `calc(100vh - ${header.offsetHeight - window.scrollY}px)`
+        }
+        else {
+          sidebar.style.maxHeight = '100vh'
+          sidebar.style.minHeight = '100vh'
+        }
+      })
+    }
   })
 
   const [isOpen, setIsOpen] = useState(false)
@@ -71,9 +74,28 @@ const LessonPage = ({ data: { mdx: post } }) => {
           '.gatsby-highlight': {
             //overflow: 'auto',
             padding: '1rem',
-            backgroundColor: '#eeeeee',
+            backgroundColor: '#f2f2f2',
             display: 'flex',
             marginBottom: '0.5rem',
+            '*': {
+              scrollbarColor: '#c1c1c0 #f2f2f2',
+              scrollbarWidth: '16px',
+              '::-webkit-scrollbar': {
+                background: '#f2f2f2',
+                width: '16px',
+              },
+              '::-webkit-scrollbar-track': {
+                background: '#f2f2f2',
+              },
+              '::-webkit-scrollbar-thumb': {
+                background: '#c1c1c0',
+                borderRadius: '16px',
+                border: '4px solid #f2f2f2',
+              },
+              '::-webkit-scrollbar-button': {
+                display: 'none',
+              },
+            }
           }
         }}
       />
@@ -96,12 +118,12 @@ const LessonPage = ({ data: { mdx: post } }) => {
             bg: 'sidebar',
             display: ['block', 'block', 'block'],
             position: ['fixed', 'sticky', null],
-            overflowY: 'scroll',
+            overflowY: 'auto',
             top: 0,
             bottom: 0,
             transform: isOpen ? 'translateX(0)' : ['translateX(-100%)', 'translateX(0)', null],
             transition: 'transform 0.2s linear',
-            height: ['100vh', 'auto', null],
+            // height: ['100vh', 'auto', null],
             zIndex: 1,
           }}
           id='sidebar'
@@ -121,8 +143,8 @@ const LessonPage = ({ data: { mdx: post } }) => {
           sx={{
             width: ['100%', '67%', '79%'],
             marginTop: [3, '40px', null],
-            marginLeft: [2, '50px', null],
-            marginRight: [2, '50px', null],
+            marginLeft: [3, '50px', null],
+            marginRight: [3, '50px', null],
             // justifyContent: 'center',
           }}
         >
@@ -143,6 +165,7 @@ const LessonPage = ({ data: { mdx: post } }) => {
                 pr: 2,
                 bg: 'sidebar',
                 borderRadius: '0px 4px 4px 0px',
+                border: '1px solid black',
                 display: ['block', 'none', null],
               }}
             >

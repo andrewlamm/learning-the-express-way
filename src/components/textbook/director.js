@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { jsx, Box, Flex } from 'theme-ui'
 import Markdown from 'markdown-to-jsx'
 
-const Warning = ({ children, ...props }) => {
+const DirectorBox = ({ children, ...props }) => {
   const [isOpen, setIsOpen] = useState(true)
   return (
     <Flex
@@ -12,7 +12,7 @@ const Warning = ({ children, ...props }) => {
       sx={{
         flexDirection: 'column',
         mt: '26px',
-        bg: '#fff9f7',
+        bg: '#fff9f6',
       }}
     >
       <Box
@@ -24,14 +24,14 @@ const Warning = ({ children, ...props }) => {
           pb: '4px',
           borderRadius: 0, // isOpen ? '5px 5px 0px 0px' : '5px 5px 5px 5px',
           border: 'solid',
-          borderColor: '#boxoutline',
-          borderLeftColor: '#ffb4a2',
+          borderColor: 'boxoutline',
+          borderLeftColor: '#ffcdb2',
           borderWidth: isOpen ? '0px 0px 0 5px' :'0px 0px 0px 5px',
           // cursor: 'pointer',
         }}
         // onClick={() => setIsOpen(!isOpen)}
       >
-        Warning
+        Do It In Director
       </Box>
       <Box
         sx={{
@@ -40,8 +40,8 @@ const Warning = ({ children, ...props }) => {
           px: 3,
           borderRadius: 0, //'0px 0px 5px 5px',
           border: 'solid',
-          borderColor: '#boxoutline',
-          borderLeftColor: '#ffb4a2',
+          borderColor: 'boxoutline',
+          borderLeftColor: '#ffcdb2',
           borderWidth: '0 0px 0px 5px',
           display: (isOpen) ? 'inherit' : 'none',
         }}
@@ -58,4 +58,4 @@ const Warning = ({ children, ...props }) => {
   )
 }
 
-export default Warning
+export default DirectorBox

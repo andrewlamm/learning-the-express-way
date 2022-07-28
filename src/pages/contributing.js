@@ -36,7 +36,11 @@ const ContributingPage = () => {
             width: '100%',
             textAlign: 'center',
             fontSize: [5, 7, null],
-            fontWeight: 700,
+            fontWeight: 200,
+            fontFamily: 'heading',
+            color: 'heading',
+            mt: '30px',
+            mb: '15px',
           }}
         >
           Contributing to Learning the Express Way
@@ -46,14 +50,15 @@ const ContributingPage = () => {
             mt: 1,
           }}
         >
-          The github repository for this site can be found <OutsideLink link="https://github.com/superandybean/learning-the-express-way">here</OutsideLink>, and your contributions are greatly appreciated!
+          The github repository for this site can be found <OutsideLink link="https://github.com/superandybean/learning-the-express-way">here</OutsideLink>, and your contributions are greatly appreciated.
           Whether it's a bug report or a new lesson, all improvements are welcome. This webpage will walk you through the contributing process and ensure that your contribution will be sucessful. You can find similar instructions on the CONTRIBUTING.md file found <OutsideLink link="https://github.com/superandybean/learning-the-express-way/blob/master/CONTRIBUTING.md">here</OutsideLink>.
         </Box>
         <Box
           sx={{
-            mt: 2,
-            fontSize: [4, 5, null],
-            fontWeight: 500,
+            mt: '15px',
+            fontSize: [3, '19px', null],
+            fontWeight: 800,
+            fontFamily: 'heading',
           }}
         >
           Reporting Bugs
@@ -64,9 +69,10 @@ const ContributingPage = () => {
         </Box>
         <Box
           sx={{
-            mt: 2,
-            fontSize: [4, 5, null],
-            fontWeight: 500,
+            mt: '15px',
+            fontSize: [3, '19px', null],
+            fontWeight: 800,
+            fontFamily: 'heading',
           }}
         >
           Suggesting Enhancements
@@ -76,9 +82,10 @@ const ContributingPage = () => {
         </Box>
         <Box
           sx={{
-            mt: 2,
-            fontSize: [4, 5, null],
-            fontWeight: 500,
+            mt: '15px',
+            fontSize: [3, '19px', null],
+            fontWeight: 800,
+            fontFamily: 'heading',
           }}
         >
           Contributing Code
@@ -90,20 +97,24 @@ const ContributingPage = () => {
           Then, you can begin adding your code. To test it, run the commands
         </Box>
         <Box>
-          <pre>
+          <pre
+            sx = {{
+              fontSize: [2, '17px', null],
+            }}>
             npm install <br />
             gatsby develop
           </pre>
         </Box>
         <Box>
-          and then view the webpage on <code>localost:8000</code>. After you're satisfied with the result, you can create a pull request <OutsideLink link="https://github.com/superandybean/learning-the-express-way/compare">here</OutsideLink>.
+          and then view the webpage on <code sx = {{fontSize: [2, '17px', null],}}>localost:8000</code>. After you're satisfied with the result, you can create a pull request <OutsideLink link="https://github.com/superandybean/learning-the-express-way/compare">here</OutsideLink>.
           In the pull request, please add specific details of what you changed/fixed, such as documentation changes, bug fixes, or enhancements, and also provide screenshots if necessary. A <OutsideLink link="">template</OutsideLink> is provided to help guide you through this and will ensure that your pull request will be as specific as possible. Additionally, when creating your request, be sure to tag it under the appropriate tag.
         </Box>
         <Box
           sx={{
-            mt: 2,
-            fontSize: [4, 5, null],
-            fontWeight: 500,
+            mt: '15px',
+            fontSize: [3, '19px', null],
+            fontWeight: 800,
+            fontFamily: 'heading',
           }}
         >
           Submitting a Lesson
@@ -115,7 +126,10 @@ const ContributingPage = () => {
           In the heading of the markdown file, add the code
         </Box>
         <Box>
-          <pre>
+          <pre
+            sx = {{
+              fontSize: [2, '17px', null],
+            }}>
             --- <br />
             title: 'EXAMPLE TITLE' <br />
             slug: /lesson/EXAMPLE_LINK <br />
@@ -127,7 +141,10 @@ const ContributingPage = () => {
           After that, please update the <OutsideLink link="https://github.com/superandybean/learning-the-express-way/blob/master/data/lessonList.yml">lessonList.yml</OutsideLink> file and add your lesson in the appropriate order. Use the format
         </Box>
         <Box>
-          <pre>
+          <pre
+            sx = {{
+              fontSize: [2, '17px', null],
+            }}>
             - title: 'EXAMPLE TITLE' <br />
               &nbsp;&nbsp;description: 'Example description.' <br />
               &nbsp;&nbsp;extraLessson: bool
@@ -142,7 +159,11 @@ const ContributingPage = () => {
             width: '100%',
             textAlign: 'center',
             fontSize: [5, 7, null],
-            fontWeight: 700,
+            fontWeight: 200,
+            fontFamily: 'heading',
+            color: 'heading',
+            mt: '35px',
+            mb: '15px',
           }}
         >
           Authors

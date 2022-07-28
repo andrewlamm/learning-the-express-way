@@ -3,66 +3,61 @@ title: Storing Data with SQL
 slug: /lesson/mysql
 ---
 
-# poggars
+*In this lesson, we begin storing data into databases.*
 
-## poo
+# Installation
 
-asdf
+SQL stands for Standard Query Language, which is the language used to communicate to databases and allows developers to add, modify, delete, and retrieve data from a database. There are many different SQL libraries for Express; on this site, we will be using [MySQL](https://www.mysql.com/). You can download MySQL [here](https://dev.mysql.com/downloads/mysql/). 
 
-### woo
+<OtherInfo>
+Nowadays, NoSQL databases such as mongoDB are gaining popularity as well. Unfortunately we won't cover them here, but you can find more information about them [here](https://www.mongodb.com/).
+</OtherInfo>
 
-yay
+If you will not be using SQL on your local machine, you can skip this section. You will find instructions to use SQL on Director at the bottom of this section.
+The following is a video tutorial on how to install it for Windows, and on other operating systems the steps should be similar. If videos aren't your thing, a step by step instruction can be found below the video.
 
-> can i 
->
->  > lol
-> 
-> wooo
+<br />
 
-lmaoo
+{{video: https://www.youtube.com/watch?v=WuBcTJnIuzo}}
 
-### xd
+1. Before your download, if you are prompted too a log in to Oracle page, you can just press the "No thanks, just start my download" button at the bottom to skip it. 
+2. In the installer, agree to the terms and condition and when prompted to choose a setup type, select the "Developer Default" option. 
+3. On the next step, you may have a pop up that claims that some of the product requirements have not been satisfied. If this is the case, press the "Execute" button at the bottom of the installer. This will cause MySQL to try to resolve these issues by itself by installing the correct programs, resolving most of the issues. There will probably still be some products that have missing requirements, but they usually will not be important and you can conintue on to the next step. 
+4. Then, on the "Installation" page, press "Execute" to install the MySQL products, which will take a few minutes.       
+5. We will now need to configure the products. On the Type and Networking page, in the Connectivity section, you have multiple connection options. The default selection of `TCP/IP` with port `3306` works well, but if for some reason you will need to change the port feel free to do so. However, please remember the port number as it will be important later.
+6. Choose the strong password encryption option and then on the next page you are prompted to create a password. Remember this password as well!
+7. We can continue on to the next steps and use the default options provided by the MySQL installer.
+8. On the Apply Configuration tab, press "Execute" and wait for the steps to finish.
+9. On the "MySQL Router Configuration" page, just press "Finish"
+10. For the next step, you can check your connection to the server by entering your username (`root`) and password (the password you created earlier) into the MySQL prompt. After that, press "Next" and then "Execute".
+11. Continue pressing "Next" and then finish the installation.
 
-```
-balls
-```
-- asfd
-- sdf
-- asfdasldflskd
+Now, we should now create a database. Open up MYSQL Command Line Client, enter the root password you made earlier, and then run the command `CREATE DATABASE [NAME];`, where `[NAME]` is the name of your new database (such as the name of your project). Also notice the semicolon at the end of the statement; they are necessary for the command to work. To use this database in the command line, run the command `USE [NAME];`.
 
-```html
-<html>
-    <body>
-        <p>Man I love HTML!</p>
-    </body>
-</html>
-```
+<DirectorBox>
+Setting up a database in director is actually quite easy! On the right side of the site settings screen, there should be a button to "Add Database". Choose the MySQL host and then "Create Database". Your database has now been created, and further instructions to connect your application to the database can be found in the bottom of this lesson.
+</DirectorBox>
 
-```css
-.body {
-    margin: 1px;
-}
-```
+# SQL Commands
+
+# Combining SQL and Express
+
+Now we need to install the `mysql` package for our web application. In our terminal, run `npm i mysql` and then at the top of our javascript file add `js›const mysql = require('mysql')`. Then, in our file, to connect to the server, add the following lines:
 
 ```js
-const pog = 2
-console.log(pog)
+const pool = mysql.createPool({
+  user: 'root`,
+  password: [PASSWORD],
+  host: '0.0.0.0',
+  port: '3306',
+  database: [DATABASE]
+})
 ```
 
-```hbs
-{{#if yay}}
-    <p>wow</p>
-{{/if}}
+where `[PASSWORD]` is the password you created earlier and `[DATABASE]` is the name of the database you created earlier. Additionally, change the port if you changed it from the default value of `3306` earlier.
+
+
+You may run into the error
 ```
-
-# new section
-
-## damn pog
-
-just kidding
-
-# ending
-
-ahaha
-
-# hjhk
+Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
+```

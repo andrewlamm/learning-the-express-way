@@ -1,8 +1,233 @@
 ---
-title: Displaying Things Using Handlebars
+title: Display with Handlebars
 slug: /lesson/hbs
 ---
 
-# hbs
+*We can use handlebars to render an HTML template and change its text.*
 
-lol poggies
+# Basics
+
+Handlebars is a javascript library that generates HTML based on a template and an input object from the server. The document uses expressions, which are defined by `hbs›{{` and `hbs›}}`.
+
+<OtherInfo>
+There are many other handlebars alternatives as well, such as [EJS](https://ejs.co/) and [pug](https://pugjs.org/).
+</OtherInfo>
+
+## Installation
+
+To install and use handlebars, we must first install the package using `npm i hbs`. Then, in our application file, we must add the lines
+
+```js
+const hbs = require('hbs') // loads hbs module
+app.set('view engine', 'hbs') // tells express to use hbs as the view engine
+```
+
+Then, let's create a folder called `views`, which is where our `.hbs` files will be stored. Inside that folder, let's create a new file called `home.hbs`, and for now just fill it with basic HTML. Then, inside your application file, replace your `/` endpoint with
+
+```js
+app.get('/', (req, res) => {
+  res.render('home') // we are rendering the hbs now
+})
+```
+
+Then, when you visit the root page, you should see the HTML from your handlebars file.
+
+# Usage
+
+Now, let's add some expressions to our `home.hbs` file. The general format of expressions in handlebars is `hbs›{{VARIABLE}}`, where `VARIABLE` is a property defined in the input object sent from the server. So, if our `index.js` had
+
+```js
+app.get('/', (req, res) => {
+  res.render('home', {name: 'Panko', age: 4}) // notice how we have a second argument in the render() function that contains the input object
+})
+```
+
+and our handlebars file had 
+
+```hbs
+<p>Hello, my name is {{name}} and I am {{age}} years old.</p>
+```
+
+Then, when we visit the root page, we should see `Hello, my name is Panko and I am 4 years old.` Additionally, if the object is nested, we just use dot notation to access those properties. So if the input object was 
+
+```
+{
+    animal: {
+        name: 'Panko',
+        age: 4,
+    }
+}
+```
+
+we would use 
+
+```hbs
+<p>Hello, my name is {{animal.name}} and I am {{animal.age}} years old.</p>
+```
+
+to obtain the same result.
+
+## Conditionals and Loops
+
+Handlebars also supports conditionals (such as `hbs›{{#if}}` and `hbs›{{else}}`), and loops (such as `hbs›{{#each}}`). In handlebars, these code blocks begin with a `#` and end with a `/`.      
+The `hbs›{{#if ARGUMENT}}` statement will display the code inside the `hbs›{{#if}}` and `hbs›{{/if}}` statements if the argument is either true, not 0, or is defined, depending on the type of the argument. So, for example let's say we have the code 
+
+```hbs
+{{#if name}}
+    <p>Hello, my name is {{name}} and I am {{age}} years old.</p>
+{{/if}}
+```
+
+If we had the same javascript as before with 
+
+```js
+app.get('/', (req, res) => {
+  res.render('home', {name: 'Panko', age: 4})
+})
+```
+
+then we will still get the same result as before. However, if we changed the javascript to not include a name property, such as making it just blank like so:
+
+```js
+app.get('/', (req, res) => {
+  res.render('home', {}) 
+})
+```
+
+then nothing will display, because the `if` condition returned false due to the undefined `name` property. There are also else ifs, which are defined with `hbs›{{else if}}` and behave similarly to else ifs of other languages. Finally, there are also `hbs›{{else}}` statements, which are used to display the code inside the `hbs›{{else}}` block if the `if` and `else if` all returned false, similar to other programming languages. Note that the `else if` and `else` block do not start with a `#` and do not end with a `/`! So, for example we have the handlebars code below.
+
+```hbs
+{{#if name}}
+    <p>Hello, my name is {{name}} and I am {{age}} years old.</p>
+{{else if age}}
+    <p>Hello, I don't have a name but I am {{age}} years old.</p>
+{{else}}
+    <p>Hello, I don't have a name nor do I have an age.</p>
+{{/if}}
+```
+
+The input object and its result are found in the table below.
+
+| Input Object              | Result                                             |
+|---------------------------|----------------------------------------------------|
+| `{name: 'Panko', age: 4}` | `Hello, my name is Panko and I am 4 years old.`    |
+| `{age: 4}`                | `Hello, I don't have a name but I am 4 years old.` |
+| `{name: 'Panko'}`         | `Hello, my name is Panko and I am years old.`      |
+| `{}`                      | `Hello, I don't have a name nor do I have an age.` |
+
+Notice that since we don't have a specific check for the `age` property if the `name` exists, then the `hbs›{{age}}` expression just returns nothing.        
+
+For loops, we use the `hbs›{{#each}}` and `hbs›{{/each}}` blocks, which iterates through an array. So, if our object was 
+
+```
+{
+    animals: [
+        {
+            name: 'Panko',
+            age: 4,
+        },
+        {
+            name: 'Bobby',
+            age: 2,
+        },
+        {
+            name: 'Sally',
+            age: 3,
+        },
+    ],
+    otherText: ' I love my animals!',
+}
+``` 
+
+we can use the handlebars code:
+
+```hbs
+{{#each animals}}
+    <p>Hello, my name is {{name}} and I am {{age}} years old.</p>
+{{/each}}
+```
+
+to get the following result:
+
+```
+Hello, my name is Panko and I am 4 years old.
+Hello, my name is Bobby and I am 2 years old.
+Hello, my name is Sally and I am 3 years old.
+```
+
+In addition, we can get the key of object (which in this example is `animals`) using `hbs›{{@key}}`, the index of the current loop through `hbs›{{@index}}`. Also, if we wanted to access another property in the parent, such as the `otherText` property in the example above, we need to use `hbs›{{../otherText}}` in our loop. So if we had 
+
+```hbs
+{{#each animals}}
+    <p>Hello, my name is {{name}} and I am {{age}} years old. {{../otherText}}</p>
+{{/each}}
+```
+
+we would get
+
+```
+Hello, my name is Panko and I am 4 years old. I love my animals!
+Hello, my name is Bobby and I am 2 years old. I love my animals!
+Hello, my name is Sally and I am 3 years old. I love my animals!
+```
+
+## Helper Functions
+
+We can create our own functions in handlebars that will be used in our templates. For example, let's say we want to display the length of a string on our handlebars page. 
+
+Then, in our javascript file, we will create a function called `findStringLength` that will return the length of a string. So, before our endpoint code (but after `hbs` has been defined), we will add the following code:
+
+```js
+hbs.registerHelper('findStringLength', function(s) {
+    return s.length
+})
+```
+
+To use it in our handlebars code, assuming we have a property called `inputString` in our input object, we will add
+
+```hbs
+The string "{{inputString}}"" has a length of {{(findStringLength inputString)}}.
+```
+
+If our `inputString` was `Panko`, our result will be `The string "Panko" has a length of 5.`     
+
+Addtionally, we can use helper functions for other uses such as only displaying a value if a certain condition is met. For example, if we have two arguments `a` and `b` and only want to display a block of text if `a > b`, then we would add in our javascript
+
+```js
+hbs.registerHelper('ifGreater', function(a, b, options) {
+    if (a > b) {
+        return options.fn(this) // this return is necessary as it allows to code inside the block to be displayed
+    }
+})
+```
+
+and then in our handlebars code, we would add
+
+```hbs
+{{#ifGreater a b}}
+    <p>{{a}} is greater than {{b}}.</p>
+{{/ifGreater}}
+```
+
+If our input object was `{a: 3, b: 1}`, then we will get `3 is greater than 1.` But if our input object was `{a: 3. b: 4}`, we will get nothing.
+
+Another way to do this is to use to have the helper function return a bool and use the `hbs›{{#if}}` block in our handlebars code. So, our helper function will instead read
+
+```js
+hbs.registerHelper('ifGreater', function(a, b, options) {
+    if (a > b) {
+        return true
+    }
+    return false
+})
+```
+
+and then our handlebars code would be
+
+```hbs
+{{#if (ifGreater a b)}}
+    <p>{{a}} is greater than {{b}}.</p>
+{{/if}}
+```
+
+This will give you the same result as before. Notice the parantheses after the `hbs›{{#if}}`! This is necessary as the `if` call only takes one argument, and without the parantheses the handlebars code will be parsed incorrectly thinking that there are 4 arguments. With the parantheses, the code is parsed correctly and there is only one argument, which would be the `true` or `false` returned by the `ifGreater` function.

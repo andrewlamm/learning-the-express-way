@@ -10,6 +10,8 @@ module.exports = {
     'gatsby-plugin-theme-ui',
     'gatsby-transformer-yaml',
     'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-image',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -28,7 +30,7 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
-        path: `${__dirname}/src/images`,
+        path: `./src/images`,
       },
     },
     {
@@ -38,6 +40,9 @@ module.exports = {
           default: require.resolve('./src/templates/lessons.js')
         },
         extensions: ['.mdx', '.md'],
+        plugins: [
+          '@bonobolabs/gatsby-remark-images-custom-widths',
+        ],
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-embed-video`,
@@ -54,11 +59,12 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-images`,
+            resolve: `@bonobolabs/gatsby-remark-images-custom-widths`,
             options: {
               withWebp: true,
               linkImagesToOriginal: true,
-              wrapperStyle: 'margin-left: 0!important; margin-right: 0!important;',
+              maxWidth: 950,
+              wrapperStyle: 'margin-left: 0!important; margin-right: 0!important; margin-top: 15px; margin-bottom: 15px;',
             }
           },
           {

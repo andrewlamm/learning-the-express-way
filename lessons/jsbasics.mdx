@@ -3,12 +3,133 @@ title: Javascript Basics
 slug: /lesson/js
 ---
 
-# pog
+*Let's add some interactive elements to our page using Javascript!*
 
-<Warning>
-poo
-</Warning>
+# Fundamentals
 
-<OtherInfo>
-check out some other information here!
-</OtherInfo>
+The basics of Javascript are not hard to learn, especially if you have a good background in programming.       
+
+## Variables
+
+In Javascript, you don't have to specify a data type when declaring a variable. Instead, you use `js›let` and `js›const`; `js›const` is used to declare a constant variable (one that can't be changed) while `js›let` is used for variables that can change. Use `js›=` to assign a value to a variable.
+
+```js
+let number = 1 // number is a variable that can change
+const DX = 10 // DX is a constant variable that can't change
+```
+
+Note that in Javascript, semicolons are not necessary! Also, `js›//` is used to comment out a line of code while `js›/*` and `js›*/` are used to comment out a block of code.
+
+## Data Types
+
+Similar to other programming languages, Javascript has integers, floats (decimals), strings (text), booleans (true/false), arrays (lists), and much more. There is also a undefined type and an null type; an undefined type is used when a variable has not been assigned a value, while the null type is a specific value of no value.
+
+### Arrays
+
+Arrays, or lists, behave similarly to other programming languages. They are denoted by square brackets `js›[` and `js›]` and can contain any assortment of types and can contain any number of elements, separated by a comma. The Javascript array is zero-indexed, meaning that the first element is at index 0. To find the element at the nth index, use `js›ARRAY_NAME[n]` or use the function `js›ARRAY_NAME.at(n)`. To add a new element to the array, use the function `js›ARRAY_NAME.push(element)`. To obtain the number of elements in an array, use the `js›.length` property. 
+
+```js
+// A good summary of this section
+
+let x = 4 // Integer
+let y = 3.5 // Float
+let s = "hello!" // string
+let b = false // boolean
+let a = [1, 2, 3, 4] // array
+
+const l = a.length // l is 4
+const c = a.at(2) // z is 3
+const d = a[2] // d is 3
+a.push(5) // a is now [1, 2, 3, 4, 5]
+```
+
+## Operators
+
+Mathematical operators such as `js›+`, `js›-`, `js›*`, `js›/`, `js›%` (mod), and `js›**` (exponent) are used to perform mathematical operations. There are also logical operators such as `js›&&` (AND operation), `js›||` (OR operation), and `js›^` (XOR operation). The AND operator returns true when both variables are true, otherwise it returns false. The OR operator returns true when either variable is true and only returns false if both variables are false. The XOR operator returns true if the variables are different from one another and false if both variables are the same (both true or both false).      
+Checking for equality is a little different in Javascript. Two equal signs (`js›==`) compares two variables while ignoring the datatype of variable. The `js›===` operator is used to check for strict equality, where both the value and the datatype must be the same. So, usually during comparisons you will use the `js›===` operator. The `js›!=` operator is used to check if two variables are not equal to each other. The `js›!==` operator is used to check if two variables are not strictly equal to each other.
+
+## Loops
+
+`js›for` and `js›while` loops are similar to other programming languages. They are used to iterate through a list of elements. The `js›for` loop is used to iterate through a list of elements: `js›for` loops are used to loop through a section of code a known number of times, while the `js›while` loop is used to loop through a section of code until a certain condition is met.
+
+```js
+/* In this loop, we initialize a new variable i to 0, and then check if i is less than 10. 
+If it is, we run the code in the loop (inside the brackets) and at the end of the loop increment i by 1. */
+for (let i = 0; i < 10; i++) {
+    console.log(i) // this prints the value of i in the console, which you can find through developer tools
+    // this will print 0 1 2 3 4 5 6 7 8 9
+}
+```
+
+## Functions
+
+Functions are basically chunks of code that can be repeatedly called. To create a function, use the keyword `js›function` and then the name of the function. The function must be followed by a set of parentheses `js›()`, which will be the arguments of the function and can be left blank.
+
+```js
+function add(a, b) {
+    return a + b
+}
+
+console.log(add(3, 4)) // prints 7
+```
+
+# Adding Javascript
+
+Similarly to CSS, Javascript can be internally put in the same file of the HTML or externally in a separate, `.js` file.     
+The advantages of using an external file is that it separates your two files, possibly making your code cleaner and easier to read. To link an external file in your HTML, use
+```html
+<script src="path/to/file.js"></script>
+```
+The advantages in using internal Javascript is that it can be easier to include in your file. To add Javascript in your HTML file, use the `js›script` tag and add the Javascript code inside the tag.       
+The `html›script` tag, for either internal or external Javascript, can be located anywhere in your HTML file. Many people put it either in the `html›head` tags, in the beginning right after the opening `html›body` tag, or right before the closing `html›body` tag.
+
+# Accessing HTML Elements
+
+There are many different ways to access HTML elements in Javascript.     
+To get a certain HTML element by its ID, use the `js›document.getElementById(ELEMENT_ID)` function. The `js›document` object refers to the entire webpage.       
+To get all the HTML elements of a certain type, use the `js›document.getElementsByTagName(ELEMENT_TYPE)` function.        
+To get all the HTML elements of a certain class, use the `js›document.getElementsByClassName(ELEMENT_CLASS)` function.      
+If you want a more specific group, instead of searching through the whole document, use a more specific object other than `document`. For example, if we want to select the paragraphs inside the element of ID `container`, 
+
+```js
+const container = document.getElementById("container") // This gets the element with the ID of "container"
+const paragraphs = container.getElementsByTagName("p") // This gets all the paragraphs inside the element with the ID of "container"
+```
+
+# Using the HTML Elements
+
+Now that we have the HTML elements, let's start doing stuff with them! 
+We can use the `js›.innerHTML` property to change the HTML inside the element. We use this to change the text of the element. For example, if we want to change the text inside the element with the ID of `text`, we can use the following code:
+
+```js
+document.getElementById('text').innerHTML = "Hello World!" // sets the text of the element with the ID of "text" to "Hello World!"
+```
+
+We can also change the style of the element using the `js›.style` property and then the CSS property you want to change. For example, if we want to change the color of the element with the ID of `text`, we can use the following code:
+
+```js
+document.getElementById('text').style.color = "red" // sets the color of the element with the ID of "text" to red
+```
+
+# Listeners
+
+A listener is a function that is called when an event occurs. For example, if we want to listen for a click on the element with the ID of `button`, we can use the following code:
+
+```js
+const button = document.getElementById('button') // gets the element with the ID of "button"
+button.addEventListener('click', function() { // adds an event listener to the element with the ID of "button", and triggers when it is clicked
+    alert('clicked') // puts an alert saying "clicked"
+})
+```
+
+This way you can do something when You can replace `click` with something else, such as `scroll`, which calls the listener when the user scrolls the page. However, for this to worth, we need to replace the `button` with the element that we want to listen to, which will be the `document` object. So, you would have
+
+```js
+document.addEventListener('scroll', function() { // adds an event listener to the page and is triggered when the page is scrolled
+    console.log('scrolled') // logs "scrolled" when the listener is triggered, which is when the user scrolls the page
+})
+```
+
+Some other ones are `focus` and `blur`, which are triggered when the user clicks on the element and when the user clicks outside of the element, respectively. For triggers on the keyboard, `keydown` is triggered when a key is pressed. Finally, when a user submits a form (which is something we will cover later!), the `submit` listener will trigger.      
+
+These are just some basics of Javascript. In the next lesson, we will continue our lesson on Javascript and learn more advanced topics.

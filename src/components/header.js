@@ -3,7 +3,11 @@
 import { useCallback, useState } from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
 import { jsx, Box, Flex, Button } from 'theme-ui'
-import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
+import { FaCaretDown, FaCaretUp, FaBook } from 'react-icons/fa'
+import { TbMap2 } from 'react-icons/tb'
+import { BsPeopleFill } from 'react-icons/bs'
+import { StaticImage } from 'gatsby-plugin-image'
+import { Global } from '@emotion/core'
 import Hamburger from 'react-hamburger-menu'
 
 const Header = ({ ...props }) => {
@@ -11,7 +15,10 @@ const Header = ({ ...props }) => {
   /* Obtain data */
   const {
     allLessonListYaml: { nodes: lessons },
-    allMdx: { edges: lessonslug }
+    allMdx: { edges: lessonslug },
+    map: { childImageSharp: { fluid: map } },
+    textbook: { childImageSharp: { fluid: textbook } },
+    people: { childImageSharp: { fluid: people } },
   } = useStaticQuery(
     graphql`
       query LessonList {
@@ -28,6 +35,27 @@ const Header = ({ ...props }) => {
                 slug
                 title
               }
+            }
+          }
+        }
+        map: file(relativePath: { eq: "map.png" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        textbook: file(relativePath: { eq: "textbook.png" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        people: file(relativePath: { eq: "people.png" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
             }
           }
         }
@@ -65,6 +93,29 @@ const Header = ({ ...props }) => {
       }}
       id="header"
     >
+      <Global
+        styles={{
+          '&, *': {
+            scrollbarColor: '#c1c1c0 #ffffff',
+            scrollbarWidth: '16px',
+            '::-webkit-scrollbar': {
+              background: '#ffffff',
+              width: '16px',
+            },
+            '::-webkit-scrollbar-track': {
+              background: '#ffffff',
+            },
+            '::-webkit-scrollbar-thumb': {
+              background: '#c1c1c0',
+              borderRadius: '16px',
+              border: '4px solid #ffffff',
+            },
+            '::-webkit-scrollbar-button': {
+              display: 'none',
+            },
+          },
+        }}
+      />
       <Box
         sx={{
           fontSize: [3, '21px', null],
@@ -134,8 +185,13 @@ const Header = ({ ...props }) => {
             sx={{
               color: '#ffffff',
               textDecoration: 'none',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
+            {/* <StaticImage src={'../images/map.png'} alt={"Icon"} width={20} sx={{mr: '5px',}} /> */}
+            <TbMap2 size='26px' sx={{paddingRight: '5px'}} />
             Guide
           </Link>
         </Box>
@@ -167,6 +223,8 @@ const Header = ({ ...props }) => {
             onClick={ () => setDropdown(!dropdown) }
             id="lessonDropdown"
           >
+            {/* <StaticImage src={'../images/textbook.png'} alt={"Icon"} width={20} sx={{mr: '3px',}} /> */}
+            <FaBook size='22px' sx={{paddingRight: '5px'}} />
             Lessons
             {!dropdown && <FaCaretDown size='1rem' sx={{paddingLeft: 2}} />}
             {dropdown && <FaCaretUp size='1rem' sx={{paddingLeft: 2}} />}
@@ -207,7 +265,7 @@ const Header = ({ ...props }) => {
                   paddingRight: '20px',
                   textDecoration: 'none',
                   display: 'block',
-                  color: ['dark', '#000000', null],
+                  color: ['#ffffff', '#000000', null],
                   '&:hover': {
                     bg: 'highlight',
                   },
@@ -232,8 +290,13 @@ const Header = ({ ...props }) => {
             sx={{
               color: '#ffffff',
               textDecoration: 'none',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
+            {/* <StaticImage src={'../images/people.png'} alt={"Icon"} width={20} sx={{mr: '4px',}} /> */}
+            <BsPeopleFill size='26px' sx={{paddingRight: '5px'}} />
             Contributing
           </Link>
         </Box>

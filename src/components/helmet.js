@@ -3,6 +3,7 @@
 import { useStaticQuery, graphql } from 'gatsby'
 import { jsx } from 'theme-ui'
 import { Helmet } from 'react-helmet'
+import { Global } from '@emotion/core'
 
 const Seo = ({ ...props }) => {
   const { site: { siteMetadata: data } } = useStaticQuery(
@@ -24,28 +25,28 @@ const Seo = ({ ...props }) => {
   return (
     <Helmet { ...props }
       bodyAttributes={{
-        style: 'overflow-x: hidden'
+        style: "overflow-x: hidden;"
       }}
     >
-      <html lang='en' />
+    <html lang='en' />
 
-      <title>{data.title}</title>
-      <meta name='title' content={data.title} />
-      <meta name='description' content={data.description} />
+    <title>{data.title}</title>
+    <meta name='title' content={data.title} />
+    <meta name='description' content={data.description} />
 
-      <meta property='og:type' content='website' />
-      <meta property='og:url' content={data.origin} />
-      <meta property='og:title' content={data.title} />
-      <meta property='og:description' content={data.description} />
-      <meta property='og:image' content={data.image} />
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content={data.origin} />
+    <meta property='og:title' content={data.title} />
+    <meta property='og:description' content={data.description} />
+    <meta property='og:image' content={data.image} />
 
-      <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:creator' content={data.author} />
-      <meta name='twitter:title' content={data.title} />
-      <meta name='twitter:image' content={data.image} />
-      <meta name='twitter:url' content={data.origin} />
-      <meta name='twitter:description' content={data.description} />
-    </Helmet>
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:creator' content={data.author} />
+    <meta name='twitter:title' content={data.title} />
+    <meta name='twitter:image' content={data.image} />
+    <meta name='twitter:url' content={data.origin} />
+    <meta name='twitter:description' content={data.description} />
+  </Helmet>
   )
 }
 
