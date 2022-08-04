@@ -20,14 +20,15 @@ const Codeblock = ({ children, ...props })  => (
   <code
     {...props}
     sx={{
-      whiteSpace: 'pre',
+      whiteSpace: 'pre-wrap',
+      wordWrap: 'break-word', // for inline code
+
       wordSpacing: 'normal',
       wordBreak: 'normal',
-      wordWrap: 'normal',
       backgroundColor: 'sidebar',
+      overflowX: 'auto',
       px: 1,
       fontSize: 2,
-      overflowX: 'auto',
     }}
   >
     {children}

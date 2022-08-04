@@ -3,4 +3,106 @@ title: Cookies! Yum
 slug: /lesson/cookies
 ---
 
-# i liek eating cookies
+*Store and save user data using cookies.*
+
+# What are Cookies?
+
+Cookies in web are small blocks of data placed by the web server and save information about their user. They tend to improve your experience online, as they help store your preferences on webpages (for example, dark/light theme) and allow you to navigate web pages more efficiently. You can view and edit the cookies on a webpage through developer tools: they are usually located under the "Application" or "Storage" tab. Cookies have a name and a value, and can have other arguments too such as its expiry date and size. 
+
+# Using Cookies in Express
+
+To use cookies in Express, you need to install the `cookie-parser` package by doing `npm i cookie-parser`. Then, in your server file, add the lines
+
+```js
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+```
+
+Then, to set a cookie, you can use the `res.cookie(name, value)` method.
+
+```js
+res.cookie('clicks', 12) // sets the cookie "clicks" to 12
+```
+
+To clear a cookie, use the `js›res.clearCookie(name)` method.   
+To get the value of a cookie, use the `req.cookies` object, which contains all the cookies. So, for example if we wanted to get the value of the cookie `clicks`, we would do
+
+```js
+const numOfClicks = req.cookies.clicks // numOfClicks is now the value of the cookie "clicks", which was 12
+```
+
+# Example
+
+Let's make an application that keeps track of the number of times the user clicks on a button. In the `hbs` file, we will use two buttons: one for clicking (and incrementing the counter), the other one for resetting the counter. We will add an onClick event listener to these buttons, which will call a Javascript function that will send a POST request to the server to add/reset the cookie. Let's start with the `hbs` file:
+
+```handlebars
+<!-- index.hbs -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cookies</title>
+    </head>
+    <body>
+        <p id="counter">Counter: {{count}}</p>
+        <p><input type="button" value="Add" onclick="addCounter()"></p> <!-- onclick listener that calls addCounter() when button is clicked -->
+        <p><input type="button" value="Reset" onclick="resetCounter()"></p> <!-- calls resetCounter() when button is clicked -->
+        <script>
+            async function addCounter() { // async function
+                const response = await fetch('/add', {method: 'POST'}) // sends POST request to /add
+                const data = await response.json() // parses response as JSON
+                document.getElementById('counter').innerHTML = 'Counter: ' + data.count // uses innerHTML to change counter to data.count
+                return
+            }
+            async function resetCounter() {
+                const response = await fetch('/reset', {method: 'POST'}) // sends POST request to /reset
+                const data = await response.json() // parses response as JSON
+                document.getElementById('counter').innerHTML = 'Counter: ' + data.count // uses innerHTML to change counter to data.count
+                return
+            }
+        </script>
+    </body>
+</html>
+```
+
+In our `index.js` file, we will need three endpoints: `/`. `/add` and `/reset`.       
+Let's start with the `/` route. We need to first check if the cookie `clicks` exists, and if not create the cookie with a value of 0. Then, we render `index.hbs` and send the value of the cookie `clicks`.
+For the `/add` endpoint, we need to take the value of the `clicks` cookie, increment it by 1, and then send that value back to the webpage.
+For the `/reset` endpoint, we need to set the value of the `clicks` cookie to 0 and send it back to the webpage. So our `index.js` file will look like this:
+
+```js
+const express = require('express')
+const app = express()
+const hbs = require('hbs')
+app.set('view engine', 'hbs')
+
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
+app.get('/', function(req, res) {
+  if (req.cookies.clicks === undefined) { // checks to see if the cookie 'clicks' exists, and if not (undefined) it will create the cookie with a value of 0
+    res.cookie('clicks', 0)
+    res.render('index', {count: req.cookies.clicks}) // render index.hbs and send the value of the cookie 'clicks'
+  }
+  else {
+    res.render('index', {count: req.cookies.clicks}) // render index.hbs and send the value of the cookie 'clicks'
+  }
+})
+
+app.post('/add', function(req, res) {
+  res.cookie('clicks', parseInt(req.cookies.clicks)+1) // takes the value of the cookie 'clicks', parses it as an integer, and adds 1 to it. sets that value to the cookie
+  res.send({count: parseInt(req.cookies.clicks)+1}) // return value of cookie back to the webpage
+})
+
+app.post('/reset', function(req, res) {
+  res.cookie('clicks', 0) // sets value of cookie 'clicks' to 0
+  res.send({count: 0}) // sends it back to the webpage
+})
+
+app.listen(3000, () => {
+  console.log(`Example server started`)
+})
+```
+
+Now, on the webpage, you should be able to click on the "Add" and "Reset" buttons to watch the counter change. Additionally, since we have cookies, if we close or refresh the page, the counter is still saved.       
+
+Some other, more pratical uses of cookies are saving a user log in so they don't need to enter their credentials every time they visit the site. Additionally, when the user logs out, the cookie will get cleared.    

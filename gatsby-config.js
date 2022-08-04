@@ -4,7 +4,8 @@ module.exports = {
     author: 'me :)',
     description: 'Learn web development the easy way.',
     image: 'https://tinyurl.com/346vdub2',
-    origin: 'https://www.yourdomain.tld',
+    origin: 'https://lew.sites.tjhsst.edu/',
+    siteUrl: 'https://lew.sites.tjhsst.edu/',
   },
   plugins: [
     'gatsby-plugin-theme-ui',
@@ -52,6 +53,7 @@ module.exports = {
               endMarker: `}}`,
             }
           },
+          'gatsby-remark-responsive-iframe',
           {
             resolve: 'gatsby-remark-autolink-headers',
             options: {

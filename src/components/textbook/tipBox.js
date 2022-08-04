@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { jsx, Box, Flex } from 'theme-ui'
-import Markdown from 'markdown-to-jsx'
 
 const TipBox = ({ children, ...props }) => {
   const [isOpen, setIsOpen] = useState(true)
@@ -33,7 +32,7 @@ const TipBox = ({ children, ...props }) => {
       >
         Tip
       </Box>
-      <Box
+      <Flex
         sx={{
           pt: 0,
           pb: '11px',
@@ -44,16 +43,12 @@ const TipBox = ({ children, ...props }) => {
           borderLeftColor: '#FFE6A7',
           borderWidth: '0 0px 0px 5px',
           display: (isOpen) ? 'inherit' : 'none',
+          fontSize: [2, '17px', null],
+          flexDirection: 'column',
         }}
       >
-        <Markdown
-          sx={{
-            fontSize: [2, '17px', null]
-          }}
-        >
-          {children}
-        </Markdown>
-      </Box>
+        {children}
+      </Flex>
     </Flex>
   )
 }

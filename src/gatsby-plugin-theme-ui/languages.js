@@ -6,6 +6,7 @@ import 'prismjs/components/prism-js'
 import 'prismjs/components/prism-ejs'
 import 'prismjs/components/prism-html'
 import 'prismjs/components/prism-hbs'
+import 'prismjs/components/prism-handlebars'
 import 'prismjs/components/prism-sql'
 
 export default PrismCore

@@ -3,4 +3,342 @@ title: Using OAuth to Authenticate Ion Accounts
 slug: /lesson/oauth
 ---
 
-# oauthhhhh
+*Authenticate TJ students through their Ion account by using OAuth*
+
+# Basics
+
+OAuth is an authorization framework that allows people to authorize their accounts on web applications. It uses web tokens, which are pieces of data that represent authorization and allows websites to access user data.    
+In this lesson, we will be using [TJ Ion Accounts](https://ion.tjhsst.edu/) to authenticate students and allow them to login to your web application. 
+
+# Usage
+
+<OtherInfo>
+
+The code for this lesson can be found in [Mr. Kosek's OAuth Example](https://github.com/pckosek/Express_Oauth).
+
+</OtherInfo>
+
+To use OAuth, we first will install three new packages: `cookie-session`, `simple-oauth2`, and `https` by doing
+```
+npm i cookie-session
+npm i simple-oauth2
+npm i https
+```
+
+In our server file, we will then add the lines 
+```js
+const https = require('https')
+const cookieSession = require('cookie-session')
+const { AuthorizationCode } = require('simple-oauth2') // load packages
+
+app.set('trust proxy', 1)
+app.use(cookieSession({
+  name: 'chocalatechip', // name of the cookie
+  keys: ['sugar', 'gingerbread'] // keys to sign the cookie to make it secure
+}))
+```
+
+The next step is to register an app on the Ion page and getting our client ID and secret key. So, head over to this [link](https://ion.tjhsst.edu/oauth/applications/), login, and then create an application. STEPS HERE DONT FORGET ZZZZZZZZZZZZZZZZZZZZZZ. From there, we can find our `client_id` and `secret_key`, and we should add them in our javascript file. 
+```js
+const client_id = 'YOUR_CLIENT_ID_HERE'
+const secret_key = 'YOUR_SECRET_KEY_HERE'
+```
+
+<TipBox>
+
+If you are using a `.env` file to protect your secrets, you should do so for the `secret_key` here too. You should also put the secret keys for the cookies in there as well!
+
+</TipBox>
+
+Then, add the following code to create an OAuth variable; this is what we will be using to authenticate accounts.
+```js
+const client = new AuthorizationCode({
+  client: {
+    id: client_id,
+    secret: secret_key,
+  },
+  auth: {
+    tokenHost: 'https://ion.tjhsst.edu/oauth/',
+    authorizePath: 'https://ion.tjhsst.edu/oauth/authorize',
+    tokenPath: 'https://ion.tjhsst.edu/oauth/token/'
+  }
+})
+```
+Next, we need to create a link that will be used for logging in. When using this link, you will be directed to the Ion servers where you will be asked to log in and are willing to give permissions to this application.
+```js
+const redirect_link = 'URL_HERE' // this URL will be used to redirect the user after they have logged in
+// the redirect link should be on your domain, so you can set an endpoint to it later
+const authorizationUri = client.authorizeURL({
+  scope: "read",
+  redirect_uri: redirect_link
+})
+```
+Now we have the authentication set up. Next, we will create a middleware function that will check if the user is logged in. To do so, we check if our `req.session` has a property called `authenticated`, which should exist if the user is logged in. 
+```js
+function checkAuthentication(req, res, next) {
+  if ('authenticated' in req.session) { // the user is logged in
+    next()
+  }
+  else {
+    res.render('unverified', {'login_link' : authorizationUri}) // the user is not logged in, so render the unverified page and send the login link
+  }
+}
+```
+We will then create a function that stores our access token after we logged in, which will help with our Ion API calls in the next section. 
+```js
+async function convertCodeToToken(req, res, next) {
+  const options = {
+    'code': req.query.code, // code we get after logging in
+    'redirect_uri': redirect_link,
+    'scope': 'read'
+  }
+  
+  try {
+    const accessToken = await client.getToken(options) // wait for oauth to get the token
+    res.locals.token = accessToken.token // store the access token in res.locals.token
+    next()
+  } 
+  catch (error) { // if there is an error getting the access token, we will send an error
+    console.log('Access Token Error')
+    console.log(error.message)
+    res.send('Something broke!')
+  }
+}
+```
+
+Now let's configure the endpoints. When someone visits the home page, we want to first check to see if they are logged in by using the `checkAuthentication` middleware function. If they are, we will render the `verified.hbs` page.
+
+```js
+app.get('/', [checkAuthentication], function (req, res) { // call middleware to check if logged in
+  res.render('verified') // in middleware, the user is already sent to unverified if they are not logged in, so we can just render the verified page here
+})
+```
+
+We want the user to be able to logout, so we must make an endpoint for that too. It will be quite simple, as all we need to do is to delete `req.session.authenticated`.
+```js
+app.get('/logout', function (req, res) { // when a user visits /logout, they will be logged out
+  delete req.session.authenticated
+  res.redirect('/') // redirect user back to home page
+})
+```
+Finally, we will add an endpoint for the redirect link after a user logs in. So for example if our redirect URL was `BASEURL/login_worker`, then our code would have
+```js
+app.get('/login_worker', [convertCodeToToken], function(req, res) { // convert the code we got from logging in to an access token
+  req.session.authenticated = true // set authenticated to true as we are logged in
+  req.session.token = res.locals.token // set access token in req.session
+  res.redirect('/') // redirect user back to home page
+})
+```
+Finally, let's create our handlebars pages! They can look like anything, a simple one for `verified.hbs` would be
+```handlebars
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logged in</title>
+  </head>
+  <body>
+    <p>You have logged in!</p>
+  </body>
+</html>
+```
+and for `unverified.hbs`
+```handlebars
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Not logged in</title>
+  </head>
+  <body>
+    <p>You have not logged in :( Login here:<a href="{{login_link}}">{{login_link}}</a></p>
+  </body>
+</html>
+```
+
+# Ion API
+
+Let's use our access token to use the Ion API to get more data about the student! You can read the documentation about the Ion API [here](https://ion.tjhsst.edu/api/). For a basic example, let's get the name of the logged in user. Looking at the docs, we can just call `/profile` as it will return the data of the current profile, which will be the logged in user. So, we will add the following code as a middleware function:
+```js
+function getProfile(req, res, next) {
+  const access_token = req.session.token.access_token // get the access token from req.session
+  const profile_url = 'https://ion.tjhsst.edu/api/profile?format=json&access_token='+access_token // get the API data from /profile using the access token
+  
+  https.get(profile_url, function(response) { // retrieve data from API
+    let rawData = ''
+    response.on('data', function(chunk) {
+        rawData += chunk // as we get data from API, add it to rawData
+    })
+
+    response.on('end', function() {
+      res.locals.profile = JSON.parse(rawData) // after we get all data, parse it as a JSON object and store it in res.locals.profile
+      next()
+  })
+  
+  }).on('error', function(err) {
+      res.send("error retrieving data!") // if for some reason we get an error, send an error message
+  })
+}
+```
+
+Then we can update our `/` endpoint with 
+
+```js
+app.get('/', [checkAuthentication, getProfile], function (req, res) { // we added a call to middleware to get the user profile
+  const profile = res.locals.profile // get profile from getProfile middleware
+  const first_name = profile.first_name // get the firstname from the profile
+  
+  res.render('verified', {'user' : first_name}) // render the verified page with the first name of the user
+})
+```
+
+and change our `verified.hbs` to
+
+```handlebars
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logged in</title>
+  </head>
+  <body>
+    <p>Hello {{user}}! You have logged in!</p>
+  </body>
+</html>
+```
+
+Try it out yourself, and try out displaying other information such as grade!    
+So, to recap: we created an app that will allow us to log in through our Ion accounts by using OAuth2. We then used the Ion API to get the user's name. Full code can be found below:
+
+```js
+// index.js
+const express = require('express')
+const app = express()
+const hbs = require('hbs')
+app.set('view engine', 'hbs')
+
+const https = require('https')
+const cookieSession = require('cookie-session')
+const { AuthorizationCode } = require('simple-oauth2') // load packages
+
+app.set('trust proxy', 1)
+app.use(cookieSession({
+  name: 'chocalatechip', // name of the cookie
+  keys: ['sugar', 'gingerbread'] // keys to sign the cookie to make it secure
+}))
+
+const client_id = 'YOUR_CLIENT_ID_HERE'
+const secret_key = 'YOUR_SECRET_KEY_HERE'
+
+const client = new AuthorizationCode({
+  client: {
+    id: client_id,
+    secret: secret_key,
+  },
+  auth: {
+    tokenHost: 'https://ion.tjhsst.edu/oauth/',
+    authorizePath: 'https://ion.tjhsst.edu/oauth/authorize',
+    tokenPath: 'https://ion.tjhsst.edu/oauth/token/'
+  }
+})
+
+const redirect_link = 'URL_HERE' // this URL will be used to redirect the user after they have logged in
+// the redirect link should be on your domain, so you can set an endpoint to it later
+const authorizationUri = client.authorizeURL({
+  scope: "read",
+  redirect_uri: redirect_link
+})
+
+function checkAuthentication(req, res, next) {
+  if ('authenticated' in req.session) { // the user is logged in
+    next()
+  }
+  else {
+    res.render('unverified', {'login_link' : authorizationUri}) // the user is not logged in, so render the unverified page and send the login link
+  }
+}
+
+function getProfile(req, res, next) {
+  const access_token = req.session.token.access_token // get the access token from req.session
+  const profile_url = 'https://ion.tjhsst.edu/api/profile?format=json&access_token='+access_token // get the API data from /profile using the access token
+  
+  https.get(profile_url, function(response) { // retrieve data from API
+    let rawData = ''
+    response.on('data', function(chunk) {
+        rawData += chunk // as we get data from API, add it to rawData
+    })
+
+    response.on('end', function() {
+      res.locals.profile = JSON.parse(rawData) // after we get all data, parse it as a JSON object and store it in res.locals.profile
+      next()
+  })
+  
+  }).on('error', function(err) {
+      res.send("error retrieving data!") // if for some reason we get an error, send an error message
+  })
+}
+
+async function convertCodeToToken(req, res, next) {
+  const options = {
+    'code': req.query.code, // code we get after logging in
+    'redirect_uri': redirect_link,
+    'scope': 'read'
+  }
+  
+  try {
+    const accessToken = await client.getToken(options) // wait for oauth to get the token
+    res.locals.token = accessToken.token // store the access token in res.locals.token
+    next()
+  } 
+  catch (error) { // if there is an error getting the access token, we will send an error
+    console.log('Access Token Error')
+    console.log(error.message)
+    res.send('Something broke!')
+  }
+}
+
+app.get('/', [checkAuthentication, getProfile], function (req, res) { // we added a call to middleware to get the user profile
+  const profile = res.locals.profile // get profile from getProfile middleware
+  const first_name = profile.first_name // get the firstname from the profile
+  
+  res.render('verified', {'user' : first_name}) // render the verified page with the first name of the user
+})
+
+app.get('/logout', function (req, res) { // when a user visits /logout, they will be logged out
+  delete req.session.authenticated
+  res.redirect('/') // redirect user back to home page
+})
+
+app.get('/login_worker', [convertCodeToToken], function(req, res) { // convert the code we got from logging in to an access token
+  req.session.authenticated = true // set authenticated to true as we are logged in
+  req.session.token = res.locals.token // set access token in req.session
+  res.redirect('/') // redirect user back to home page
+})
+
+app.listen(3000, () => {
+  console.log(`Example server started`)
+})
+```
+
+```handlebars
+<!-- verified.hbs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logged in</title>
+  </head>
+  <body>
+    <p>Hello {{user}}! You have logged in!</p>
+  </body>
+</html>
+```
+
+```handlebars
+<!-- unverified.hbs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Not logged in</title>
+  </head>
+  <body>
+    <p>You have not logged in :( Login here:<a href="{{login_link}}">{{login_link}}</a></p>
+  </body>
+</html>
+```

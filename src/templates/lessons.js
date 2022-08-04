@@ -95,8 +95,10 @@ const LessonPage = ({ data: { mdx: post } }) => {
               '::-webkit-scrollbar-button': {
                 display: 'none',
               },
+              whiteSpace: 'pre',
+              wordWrap: 'normal',
             }
-          }
+          },
         }}
       />
       <Flex
@@ -125,6 +127,23 @@ const LessonPage = ({ data: { mdx: post } }) => {
             transition: 'transform 0.2s linear',
             // height: ['100vh', 'auto', null],
             zIndex: 1,
+            scrollbarColor: '#c1c1c0 sidebar',
+            scrollbarWidth: '16px',
+            '::-webkit-scrollbar': {
+              background: '#f2f2f2',
+              width: '16px',
+            },
+            '::-webkit-scrollbar-track': {
+              background: 'sidebar',
+            },
+            '::-webkit-scrollbar-thumb': {
+              background: '#c1c1c0',
+              borderRadius: '16px',
+              border: '4px solid #f2f2f2',
+            },
+            '::-webkit-scrollbar-button': {
+              display: 'none',
+            },
           }}
           id='sidebar'
           ref={sidebarRef}
@@ -165,7 +184,10 @@ const LessonPage = ({ data: { mdx: post } }) => {
                 pr: 2,
                 bg: 'sidebar',
                 borderRadius: '0px 4px 4px 0px',
-                border: '1px solid black',
+                borderWidth: '1px 1px 1px 0',
+                borderStyle: 'solid',
+                borderColor: 'black',
+                zIndex: 2,
                 display: ['block', 'none', null],
               }}
             >
@@ -189,7 +211,7 @@ const LessonPage = ({ data: { mdx: post } }) => {
             </Box>
             <Heading lessonTitle={title} />
             <MDXProvider components={mdxComponents}>
-              <MDXRenderer>{body}</MDXRenderer>
+              {<MDXRenderer>{body}</MDXRenderer>}
             </MDXProvider>
             <NavFooter lessonTitle={title} />
           </Box>

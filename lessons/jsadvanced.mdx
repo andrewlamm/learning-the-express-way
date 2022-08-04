@@ -73,11 +73,15 @@ m.forEach(function(val, key) {
 ```
 
 <OtherInfo>
-You might notice that maps are pretty similar to objects, but they do have their differences! For example, the keys of maps can be of any data type while the properties of objects must be a string. Additionally, maps use the `forEach()` method to iterate while objects use a `for...in` loop.
+
+You might notice that maps are pretty similar to objects, but they do have their differences! For example, the keys of maps can be of any data type while the properties of objects must be a string. Additionally, maps use the `js›forEach()` method to iterate while objects use a `js›for...in` loop.
+
 </OtherInfo>
 
 <Warning>
+
 While using dot notation and square notation on a Map does not throw an error, it won't give you the expected result! Instead, those will edit the properties of the Map object, not the keys itself. So, when editing the values of the Map, remember to use the `js›set()` method.
+
 </Warning>
 
 To define a set, use the `new Set()` constructor. Sets is an object that acts as a collection of values, and all the values in a set must be unique. If you try adding a duplicate value to a set, nothing happens.     
@@ -187,7 +191,9 @@ setTimeout(runConcurrent, 4000) // runs the runConcurrent function after 4 secon
 ```
 
 <OtherInfo>
+
 This was a very, very introduction to Promises and async functions, and there's much more out there! A more thorough explanation [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
+
 </OtherInfo>
 
 # API Calls
@@ -195,18 +201,24 @@ This was a very, very introduction to Promises and async functions, and there's 
 We use API calls to obtain request data from another application. To do an API call, we use the `js›fetch()` method. A simple example is found below:
 
 ```js
-fetch('LINK').then((reponse) => 
-    response.json()).then((data) => {
-        console.log(data)
-    }
-)
+const response = await fetch('LINK', {options}) // options is optional, but can be used to set headers, etc.
+const data = await response.json() // parses the response into a JSON object
+console.log(data)
 ```
 
 The `js›fetch()` method takes in the request URL and returns a promise when the request is complete. The promise will resolve with the response data, which we then turn into a JSON object (which acts just like a normal Javascript object) through the `js›json()` method which is in the `data` variable.
 From there, we can do whatever we want with the data! In the example code above all we do is print the data to the console, but we can do many other things such as displaying it on our webpage (remember the `js›.innerHTML` property we talked about in the last lesson?) 
 
+<OtherInfo>
+
+For a more in depth usage of `js›fetch()`, visit the MDN page [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+</OtherInfo>
+
 <Warning>
+
 Not all API calls will work in Javascript, and you may run into a `CORS header 'Access-Control-Allow-Origin' missing` error. Unfortunately, there is no good fix for this error except for making the API call on a backend server... which fortunately is our next lesson! 
+
 </Warning>
 
 We got a pretty good understanding of Javascript now, so let's move on to the next step: creating a backend server using Express.

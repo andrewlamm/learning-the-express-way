@@ -21,7 +21,9 @@ When we create our first application, first create a new folder where the files 
 npm init
 ```
 <TipBox>
+
 Make sure you are in the right directory in your terminal! You can navigate to the folder you want to create by using the `cd` command.
+
 </TipBox>
 Then, fill in the prompts provided; many of the fields can be left empty and those will be set to its default value. After you confirm the settings, the file `package.json` should appear in your folder. After that is done, we must install a package using the 
 
@@ -41,7 +43,7 @@ Then, we will make a file in the folder called `index.js` which will be where mo
 const express = require('express')
 const app = express()
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   res.send('Hello World!')
 })
 
@@ -57,7 +59,16 @@ node index.js
 Then, you can visit the page at http://localhost:3000/. You should see a page that just says `Hello World!`. To stop the server, do Ctrl+C.
 
 <DirectorBox>
-In [Director](https://director.tjhsst.edu/), press the "Create Site" button again and fill out the form. However, this time choose "Dynamic" in the Type dropdown. After creating the site, select "Customize Docker Image" button on the site settings page, and on there select the " Node.js (Alpine)" option and click on the "Write run.sh file?" checkbox. Save the image, and then in the online terminal create a new file `index.js` in the `public` folder and copy paste the file above, with one exception. Replace the `3000` on line 8 with `process.env.PORT`. Save the file, and then either click on the "Restart Process" button on the site settings page or press Alt+Enter to restart the server. After the server has finished running, visit the site URL and you should see "Hello World!" 
+
+In [Director](https://director.tjhsst.edu/), press the "Create Site" button again and fill out the form. However, this time choose "Dynamic" in the Type dropdown. After creating the site, select "Customize Docker Image" button on the site settings page, and on there select the "Node.js (Alpine)" option and click on the "Write run.sh file?" checkbox. Save the image, and then in the online terminal create a new file `index.js` in the `public` folder and copy paste the file above, with one exception. Replace the last three lines with
+```js
+app.listen(process.env.PORT,  => {
+  console.log(`Example server started`)
+})
+```
+Note that the port `3000` has been replaced with `process.env.PORT`.
+Save the file, and then either click on the "Restart Process" button on the site settings page or press Alt+Enter to restart the server. After the server has finished running, visit the site URL and you should see "Hello World!" 
+
 </DirectorBox>
 
 Okay, so what just happened in those 10ish lines of code? Well, on the first line the `js›require()` methods loads the Express module, which we then initialize on the second line. Let's skip the middle few lines for right now and discuss the last three lines. The last three lines cause the server to listen on port 3000 for connections, which is why when you visit localhost:3000 you get the webpage. Lastly, the middle few lines manage the **endpoints** of the server.        
@@ -67,12 +78,14 @@ Okay, so what just happened in those 10ish lines of code? Well, on the first lin
 An endpoint is a route that the server listens for. In this case, the server listens for a request to the root of the server, which is `/`. When the server receives a request to the root, it will send the message `Hello World!`.       
 There are many functions that define these endpoints, but the most common ones are `js›get()` and `js›post()`. The first one is a GET request, and the second one is a POST request. When visiting a site, you will be sending a GET request, so most of the time you will be using the `js›get()` method. POST methods usually are used when submitting forms, whcih we will discuss in a few sections below.
 <OtherInfo>
+
 We won't go over the details of GET vs POST here, but you can find more info about that [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods).
+
 </OtherInfo>
 The arguments (inside the parantheses) are the actual endpoints. So if in our code we add the lines
 
 ```js
-app.get('/test', (req, res) => {
+app.get('/test', function(req, res) {
   res.send('This is a test.')
 })
 ```
@@ -81,7 +94,7 @@ then the server will listen for a request to `/test` and respond with the messag
 Inside the `js›get()` function, we have the function `send()`, which just sends a message to the client. If we wanted to have the website display an HTML file, we would use the `js›sendFile()` method. For example, if we had a file name `index.html` and wanted it to be displayed at the route `/test`, we would add
 
 ```js
-app.get('/test', (req, res) => {
+app.get('/test', function(req, res) {
   res.sendFile('index.html', { root: __dirname }) // the root is necessary for the application to locate the file
 })
 ```
@@ -94,7 +107,7 @@ Finally, when we want to redirect the user to another route, we will use the `js
 You don't have to specify a specific endpoint for every request. Instead, we can use wildcards for more general routes using `:`. Let's give an example.
 
 ```js
-app.get('/test/:id', (req, res) => {
+app.get('/test/:id', function(req, res) {
   res.send(`This is a test with id ${req.params.id}`)
 })
 ```
@@ -104,7 +117,7 @@ app.get('/test/:id', (req, res) => {
 We can use `?` to make a parameter optional. For example, if we wanted to make the `id` parameter optional, we would add
 
 ```js
-app.get('/test/:id?', (req, res) => {
+app.get('/test/:id?', function(req, res) {
   if (req.params.id) {
     res.send(`This is a test with id ${req.params.id}`)
   } else {
@@ -117,7 +130,7 @@ Then, if we visit localhost:3000/test/1, we still get the message `This is a tes
 Finally, `*` allows us to use a wildcard within a route path. So, if we wanted to make a route that matches any route, we would add
 
 ```js
-app.get('/*', (req, res) => {
+app.get('/*', function (req, res) {
   res.send('This is a wildcard route') 
 })
 ```
@@ -125,7 +138,9 @@ app.get('/*', (req, res) => {
 Then, any route to localhost:3000 will get the message `This is a wildcard route`. 
 
 <TipBox>
+
 If there are duplicate possible endpoints for a certain route, the first one is picked. So, if we wanted to make an error page for routes that don't exist, we would add the `*` wildcard at the bottom.
+
 </TipBox>
 
 ## req and res
@@ -138,6 +153,8 @@ We'll take a short break from Express and talk about HTML forms real quick. Form
 Labels are an HTML element that help label an input. It's benefit is that touching the label of an input selects the input as well, helping with clicking small inputs such as radio inputs. When using the `html›<label>` tag, the `for` attribute must match the `id` attribute of the input it is binding with.
 The table below shows some common input types and their results.
 
+<div style="overflow-x: scroll">
+
 | HTML | Output |
 -----------------------------|------------------------
 | `html›<input type="text">` | <input type="text" /> |
@@ -145,6 +162,8 @@ The table below shows some common input types and their results.
 | `html›<input type="checkbox">` | <input type="checkbox" /> |
 | `html›<input type="button" value="text">` | <input type="button" value="text" /> |
 | `html›<input type="submit">` | <input type="submit" /> |
+
+</div>
 
 Radio inputs only allow one selection for each set of radio inputs, while checkboxes allow multiple. They both have a `value` attribute which represent the value of the option. Radio and checkbox inputs must share the same `name` attribute to link them together. So, for example,
 
@@ -223,11 +242,11 @@ const app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   res.sendFile('index.html', { root: __dirname })
 })
 
-app.post('/submit_form', (req, res) => {
+app.post('/submit_form', function(req, res) {
   res.send(`Hello ${req.body.name}`)
 })
 
@@ -253,7 +272,7 @@ function mySecondMiddleware(req, res, next) {
   next() // calls the next function
 }
 
-app.get('/', [myMiddleware, mySecondMiddleware], (req, res) => { // we have the two middleware functions in an array
+app.get('/', [myMiddleware, mySecondMiddleware], function (req, res) { // we have the two middleware functions in an array
   res.send('Hello World!') // prints 'This is my middleware' first and then 'request url: /'
 })
 ```

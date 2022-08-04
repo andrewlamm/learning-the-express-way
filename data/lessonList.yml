@@ -18,5 +18,5 @@
   description: 'Learn how to use OAuth to authenticate TJHSST Ion accounts on your webpage.'
   extraLesson: true
 - title: 'Debugging Techniques'
-  description: 'Improve your debugging skills with this lesson about the web debugger and basic vocab terms to help you search better.'
+  description: 'Improve your debugging skills with this lesson about using the browswer debugger to fix your faulty Javascript scripts.'
   extraLesson: true

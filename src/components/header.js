@@ -6,7 +6,6 @@ import { jsx, Box, Flex, Button } from 'theme-ui'
 import { FaCaretDown, FaCaretUp, FaBook } from 'react-icons/fa'
 import { TbMap2 } from 'react-icons/tb'
 import { BsPeopleFill } from 'react-icons/bs'
-import { StaticImage } from 'gatsby-plugin-image'
 import { Global } from '@emotion/core'
 import Hamburger from 'react-hamburger-menu'
 
@@ -16,9 +15,6 @@ const Header = ({ ...props }) => {
   const {
     allLessonListYaml: { nodes: lessons },
     allMdx: { edges: lessonslug },
-    map: { childImageSharp: { fluid: map } },
-    textbook: { childImageSharp: { fluid: textbook } },
-    people: { childImageSharp: { fluid: people } },
   } = useStaticQuery(
     graphql`
       query LessonList {
@@ -35,27 +31,6 @@ const Header = ({ ...props }) => {
                 slug
                 title
               }
-            }
-          }
-        }
-        map: file(relativePath: { eq: "map.png" }) {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        textbook: file(relativePath: { eq: "textbook.png" }) {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        people: file(relativePath: { eq: "people.png" }) {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
             }
           }
         }
@@ -224,7 +199,7 @@ const Header = ({ ...props }) => {
             id="lessonDropdown"
           >
             {/* <StaticImage src={'../images/textbook.png'} alt={"Icon"} width={20} sx={{mr: '3px',}} /> */}
-            <FaBook size='22px' sx={{paddingRight: '5px'}} />
+            <FaBook size='20px' sx={{paddingRight: '5px'}} />
             Lessons
             {!dropdown && <FaCaretDown size='1rem' sx={{paddingLeft: 2}} />}
             {dropdown && <FaCaretUp size='1rem' sx={{paddingLeft: 2}} />}
@@ -296,7 +271,7 @@ const Header = ({ ...props }) => {
             }}
           >
             {/* <StaticImage src={'../images/people.png'} alt={"Icon"} width={20} sx={{mr: '4px',}} /> */}
-            <BsPeopleFill size='26px' sx={{paddingRight: '5px'}} />
+            <BsPeopleFill size='26px' sx={{paddingLeft: '5px', transform: 'scaleX(-1)',}} />
             Contributing
           </Link>
         </Box>

@@ -56,6 +56,16 @@ and our HTML file was
 
 then our text would be green.
 
+<DirectorBox>
+
+It may be a good idea to store your stylesheets (your `.css` files ) in another folder called `styles`. To do this on director, firstly you must create a new folder in the `public` folder by right clicking the `public` folder and selecting new folder. Then, in the popup, name the new folder `styles` and add your stylesheet to that folder. Finally, in your HTML file, add the line
+```html
+<`link rel="stylesheet" href="styles/mystylesheet.css">
+```
+where `mystylesheet.css` is the name of your CSS file. Then, your stylesheet should be loaded! The way this works is that it looks in the `styles` folder (due to the slash) for `mystylesheet.css`.
+
+</DirectorBox>
+
 ## Internal CSS 
 
 Internal CSS is advantagous for webpages that have a unique style. Simply add a `html›<style>` tag in the `html›head` element of your HTML file, and then add your rulesets inside it. An example is found below:
@@ -179,7 +189,9 @@ Pseudo-classes are specific states of certain elements. For example, the `css›
 Pseudo-elements select only a certain part of an element. For example, the `css›::before` pseudo-element is used to select the element that is before the element that is being selected.
 
 <OtherInfo>
+
 Remember, these are just the basics! There are many other selectors, including combinators. Additionally, there are more pseudo-classes and pseudo-elements than what we have covered. You can find a more comprehensive list of selectors [here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
+
 </OtherInfo>
 
 # CSS Properties
@@ -217,7 +229,9 @@ Borders can be added to any element, not just tables! To add it, use the propert
 <br />
 
 <OtherInfo>
+
 Again, this is just a short list of the many CSS properties out there. A really powerful property that we won't be covering here is the [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). Additionally, not all variations of the parameters for the properties were covered as well. You can find a more comprehensive list of CSS properties [here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties), or by just simply searching up a certain CSS property.
+
 </OtherInfo>
 
 <br />

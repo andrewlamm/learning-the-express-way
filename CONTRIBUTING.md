@@ -5,7 +5,7 @@ Hello! Thanks for contributing to this project! Whether it's a bug report or a n
 ## Reporting Bugs
 
 This section guides you through the process of submitting a bug report.     
-Firstly, please check out [this list](https://github.com/superandybean/learning-the-express-way/issues) and make sure that your bug has not already been reported. When reporting your bug, please be as specific as possible, such as including steps to reproduce the bug, screenshots, device and browser, etc. In addition, add screenshots if necessary. A [recommended template](asdf) is provided to help ensure that all information is provided and to help us resolve the bug quicker. When submitting the report, please use a clear and concise title, and also tag the issue with the "bug" tag.
+Firstly, please check out [this list](https://github.com/superandybean/learning-the-express-way/issues) and make sure that your bug has not already been reported. When reporting your bug, please be as specific as possible, such as including steps to reproduce the bug, screenshots, device and browser, etc. In addition, add screenshots if necessary. When submitting the report, please use a clear and concise title, and also tag the issue with the "bug" tag.
 
 ## Suggesting Enhancements
 
@@ -15,7 +15,7 @@ Similarly to submitting a bug report, check out [this list](https://github.com/s
 ## Contributing Code
 
 Want to take it to your own hands and fix the bug or implement your suggestion? This step-by-step guide will help aid you through this process.      
-Firstly, create a [fork](https://github.com/superandybean/learning-the-express-way/fork) of this repository to access and edit the code. After you're finished, create a pull request [here](https://github.com/superandybean/learning-the-express-way/compare). In the pull request, please add specific details of what you changed/fixed, such as documentation changes, bug fixes, or enhancements, and also provide screenshots if necessary. A [template]() is provided to help guide you through this and will ensure that your pull request will be as specific as possible. Additionally, when creating your request, be sure to tag it under the appropriate tag.
+Firstly, create a [fork](https://github.com/superandybean/learning-the-express-way/fork) of this repository to access and edit the code. After you're finished, create a pull request [here](https://github.com/superandybean/learning-the-express-way/compare). In the pull request, please add specific details of what you changed/fixed, such as documentation changes, bug fixes, or enhancements, and also provide screenshots if necessary. Additionally, when creating your request, be sure to tag it under the appropriate tag.
 
 ## Submitting a Lesson
 
