@@ -134,11 +134,11 @@ const ContributingPage = () => {
               }}>
               - title: 'EXAMPLE TITLE' <br />
                 &nbsp;&nbsp;description: 'Example description.' <br />
-                &nbsp;&nbsp;extraLessson: bool
+                &nbsp;&nbsp;extraLessson: true
             </pre>
           </Box>
           <Box>
-            where the title name matches exactly with the one found in your markdown file. Additionally, provide a short 1-2 sentence summary of your lesson with the description argument. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one.
+            where the title name matches exactly with the one found in your markdown file. Additionally, provide a short 1-2 sentence summary of your lesson with the description argument.
             After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.
           </Box>
         </SectionText>

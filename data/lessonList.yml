@@ -16,7 +16,8 @@
   description: 'An introduction to what cookies are and its uses, such as storing and remembering user data to improve user experience.'
 - title: 'Using OAuth to Authenticate Ion Accounts'
   description: 'Learn how to use OAuth to authenticate TJHSST Ion accounts on your webpage.'
-  extraLesson: true
 - title: 'Debugging Techniques'
   description: 'Improve your debugging skills with this lesson about using the browswer debugger to fix your faulty Javascript scripts.'
+- title: 'Introduction to jQuery'
+  description: 'Learn about jQuery, a popular Javascript library aiming to ease Javascript coding.'
   extraLesson: true

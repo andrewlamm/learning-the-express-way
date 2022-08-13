@@ -10,9 +10,9 @@ module.exports = {
   plugins: [
     'gatsby-plugin-theme-ui',
     'gatsby-transformer-yaml',
+    'gatsby-plugin-image',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-image',
     {
       resolve: 'gatsby-source-filesystem',
       options: {

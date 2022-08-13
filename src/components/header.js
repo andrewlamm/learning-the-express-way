@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
-import { jsx, Box, Flex, Button } from 'theme-ui'
-import { FaCaretDown, FaCaretUp, FaBook } from 'react-icons/fa'
+import { jsx, Box, Flex, Button, Input } from 'theme-ui'
+import { FaCaretDown, FaCaretUp, FaBook, FaSearch } from 'react-icons/fa'
 import { TbMap2 } from 'react-icons/tb'
 import { BsPeopleFill } from 'react-icons/bs'
 import { Global } from '@emotion/core'
@@ -14,7 +14,7 @@ const Header = ({ ...props }) => {
   /* Obtain data */
   const {
     allLessonListYaml: { nodes: lessons },
-    allMdx: { edges: lessonslug },
+    allMdx: { edges: lessonNodes },
   } = useStaticQuery(
     graphql`
       query LessonList {
@@ -31,6 +31,7 @@ const Header = ({ ...props }) => {
                 slug
                 title
               }
+              rawBody
             }
           }
         }
@@ -40,16 +41,62 @@ const Header = ({ ...props }) => {
 
   /* Drop down menu */
   const [dropdown, setDropdown] = useState(false)
-  const [focused, setFocused] = useState(false)
+  const [extraDropdown, setExtraDropdown] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   let lessonNumber = 1 // Used for incrementation
 
   /* Link lesson title to URL */
   const titleToLink = {}
-  lessonslug.forEach(lesson => {
+  lessonNodes.forEach(lesson => {
     titleToLink[lesson.node.frontmatter.title] = lesson.node.frontmatter.slug
   })
+
+  const titleToNumber = {}
+  lessons.forEach(lesson => {
+    titleToNumber[lesson.title] = lesson.extraLesson ? 'EX' : lessonNumber++
+  })
+
+  /* Separate extra lessons */
+  const extraLessons = lessons.filter(lesson => lesson.extraLesson)
+  const normalLessons = lessons.filter(lesson => !lesson.extraLesson)
+
+  /* Search features */
+  const [searchQuery, setSearchQuery] = useState({
+    filteredData: [],
+    query: "",
+  })
+
+  const handleInputChange = (event) => {
+    if (event.target.value === "") {
+      setSearchQuery({
+        filteredData: [],
+        query: "",
+      })
+      return
+    }
+
+    const searchedData = lessonNodes.filter(lesson => {
+      return (
+        lesson.node.frontmatter.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        lesson.node.rawBody.toLowerCase().includes(event.target.value.toLowerCase())
+      )
+    })
+
+    searchedData.sort((a, b) => {
+      const aVal = (titleToNumber[a.node.frontmatter.title] === "EX" || titleToNumber[a.node.frontmatter.title] === undefined) ? 999 : titleToNumber[a.node.frontmatter.title]
+      const bVal = (titleToNumber[b.node.frontmatter.title] === "EX" || titleToNumber[b.node.frontmatter.title] === undefined) ? 999 : titleToNumber[b.node.frontmatter.title]
+      return aVal - bVal
+    })
+
+    setSearchQuery({
+      filteredData: searchedData,
+      query: event.target.value
+    })
+  }
+
+
+  const [searchOpen, setSearchOpen] = useState(false)
 
   return (
     <Flex // Header
@@ -96,7 +143,7 @@ const Header = ({ ...props }) => {
           fontSize: [3, '21px', null],
           color: 'primary',
           bg: '#000000',
-          marginRight: '48px',
+          marginRight: ['40px', null, '48px'],
           fontWeight: 600,
           textDecoration: 'none',
         }}
@@ -145,13 +192,14 @@ const Header = ({ ...props }) => {
           transition: 'transform 0.2s linear',
           zIndex: -1,
           fontFamily: 'heading',
+          flexGrow: 1,
         }}
       >
         <Box
           sx={{
             fontSize: 3,
             color: '#ffffff',
-            marginRight: '40px',
+            marginRight: ['32px', null, '40px'],
             textDecoration: 'none',
           }}
         >
@@ -173,12 +221,11 @@ const Header = ({ ...props }) => {
         <Box
           sx={{
             position: 'relative',
-            marginRight: '40px',
+            marginRight: ['32px', null, '40px'],
           }}
-          onFocus={ () => setFocused(true) }
+          tabIndex="0"
           onBlur={ (event) => {
             if (!event.currentTarget.contains(event.relatedTarget)) {
-              setFocused(false)
               setDropdown(false)
             }
           } }
@@ -224,7 +271,7 @@ const Header = ({ ...props }) => {
             }}
             id="lessonDropdownList"
           >
-            {lessons.map((lesson, i) => (
+            {normalLessons.map((lesson, i) => (
               <Link
                 key={i}
                 to={titleToLink[lesson.title]}
@@ -247,16 +294,90 @@ const Header = ({ ...props }) => {
                   fontSize: 2,
                 }}
               >
-                {lesson.extraLesson ? 'EX' : lessonNumber++}: {lesson.title}
+                {titleToNumber[lesson.title]}: {lesson.title}
               </Link>
             ))}
           </Box>
         </Box>
+        {/* <Box
+          sx={{
+            position: 'relative',
+            marginRight: ['32px', null, '40px'],
+          }}
+          tabIndex="0"
+          onBlur={ (event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setExtraDropdown(false)
+            }
+          } }
+        >
+          <Button
+            sx={{
+              fontSize: 3,
+              color: '#ffffff',
+              background: '#000000',
+              padding: 0,
+              cursor: 'pointer',
+              fontFamily: 'heading',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onClick={ () => setExtraDropdown(!extraDropdown) }
+            id="extraLessonDropdown"
+          >
+            <FaBook size='20px' sx={{paddingRight: '5px'}} />
+            Extras
+            {!extraDropdown && <FaCaretDown size='1rem' sx={{paddingLeft: 2}} />}
+            {extraDropdown && <FaCaretUp size='1rem' sx={{paddingLeft: 2}} />}
+          </Button>
+          <Box
+            sx={{
+              visibility: (extraDropdown) ? 'visible' : 'hidden',
+              opacity: (extraDropdown) ? 100 : 0,
+              display: (extraDropdown) ? 'inherit' : 'none',
+              position: ['static', 'absolute', null],
+              top: 'calc(100% + 13.5px)',
+              bg: ['#000000', '#ffffff', null],
+              borderRadius: '5px',
+              paddingTop: '7px',
+              paddingBottom: '7px',
+              zIndex: 999,
+              transition: '0.2 linear',
+              width: ['auto', 'max-content', null],
+              filter: 'drop-shadow(0 0 0.75rem rgba(0,0,0,0.5))',
+              // height: '200px',
+              // overflowY: 'scroll',
+            }}
+            id="extraLessonDropdownList"
+          >
+            {extraLessons.map((lesson, i) => (
+              <Link
+                key={i}
+                to={titleToLink[lesson.title]}
+                sx={{
+                  py: '3.5px',
+                  paddingLeft: [0, '15px', null],
+                  paddingRight: '20px',
+                  textDecoration: 'none',
+                  display: 'block',
+                  color: ['#ffffff', '#000000', null],
+                  '&:hover': {
+                    bg: 'highlight',
+                  },
+                  fontSize: 2,
+                }}
+              >
+                {titleToNumber[lesson.title]}: {lesson.title}
+              </Link>
+            ))}
+          </Box>
+        </Box> */}
         <Box
           sx={{
             fontSize: 3,
             color: '#ffffff',
-            marginRight: 4,
+            marginRight: ['32px', null, '40px'],
             textDecoration: 'none',
           }}
         >
@@ -275,6 +396,125 @@ const Header = ({ ...props }) => {
             Contributing
           </Link>
         </Box>
+        <Flex
+          sx={{
+            position: 'relative',
+            marginRight: [0, '40px', null],
+            flexGrow: 1,
+            justifyContent: ['start', 'end', null],
+          }}
+        >
+          <Flex
+            sx={{
+              fontSize: 3,
+              color: '#ffffff',
+              textDecoration: 'none',
+              flexGrow: 1,
+              // flexDirection: 'column',
+              justifyContent: ['start', 'end', null],
+              width: ['100%', 'auto', null],
+            }}
+          >
+            <Flex
+              tabIndex="0"
+              onBlur={ (event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) {
+                  setSearchOpen(false)
+                }
+              } }
+              sx={{
+                alignItems: 'center',
+                width: ['100%', 'auto', null],
+              }}
+            >
+              <Flex
+                sx={{
+                  flexDirection: ['column-reverse', null, 'row'],
+                }}
+              >
+                <Input
+                  placeholder='Search'
+                  autoComplete="off"
+                  type='search'
+                  sx={{
+                    fontSize: 2,
+                    px: 2,
+                    py: '1px',
+                    border: 'none',
+                    bg: '#a0a0a0',
+                    display: searchOpen ? 'block' : ['none', 'block', null],
+                    // maxWidth: '400px',
+                    width: ['100%', '350px', null],
+                    clipPath: searchOpen ? 'inset(0%)' : 'inset(0% 0% 0% 100%)',
+                    transition: 'clip-path 0.2s linear',
+                    mr: 2,
+                    position: ['static', 'absolute', 'static'],
+                    top: ['calc(100% + 13.5px)', null, '0'],
+                    right: 0,
+                    mt: [1, 0, null],
+                  }}
+                  onChange={handleInputChange}
+                  id='searchBar'
+                />
+                <FaSearch
+                  size='24px'
+                  sx={{
+                    paddingLeft: ['2px', null, '5px'],
+                    transform: 'scaleX(-1)',
+                    // display: searchOpen ? 'none' : 'block',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setSearchOpen(!searchOpen)
+                    document.getElementById('searchBar').focus()
+                    document.getElementById('searchBar').value = ""
+                    setSearchQuery({
+                      filteredData: [],
+                      query: "",
+                    })
+                  }}
+                />
+              </Flex>
+              <Flex
+                sx={{
+                  display: (searchOpen) ? 'inherit' : 'none',
+                  position: 'absolute',
+                  top: ['calc(100% + 13.5px)', 'calc(100% + 38px)', 'calc(100% + 13.5px)'],
+                  left: ['0', '-324px', 'auto'],
+                  bg: '#ffffff',
+                  borderRadius: '5px',
+                  paddingTop: '7px',
+                  paddingBottom: '7px',
+                  zIndex: 999,
+                  flexDirection: 'column',
+                  width: ['auto', 'max-content', null],
+                  filter: 'drop-shadow(0 0 0.75rem rgba(0,0,0,0.5))',
+                }}
+              >
+                {searchQuery.query !== '' && searchQuery.filteredData.map((lesson, i) => (
+                  <Link
+                    key={i}
+                    to={titleToLink[lesson.node.frontmatter.title]}
+                    sx={{
+                      py: '3.5px',
+                      paddingLeft: '15px',
+                      paddingRight: '20px',
+                      textDecoration: 'none',
+                      display: 'block',
+                      color: '#000000',
+                      '&:hover': {
+                        bg: 'highlight',
+                      },
+                      fontSize: 2,
+                    }}
+                  >
+                    {titleToNumber[lesson.node.frontmatter.title] || "EX"}: {lesson.node.frontmatter.title}
+                  </Link>
+                ))}
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   )

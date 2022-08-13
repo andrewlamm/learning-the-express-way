@@ -18,7 +18,7 @@ const theme = {
     accent: '#6d6875',
     highlight: '#f0dbdc',
     headingbg: '#f8f8f8',
-    heading: '#a9707b',
+    heading: '#941b0c', // '#a9707b',
     sidebar: '#f2f2f2',
     boxoutline: '#cccccc',
 

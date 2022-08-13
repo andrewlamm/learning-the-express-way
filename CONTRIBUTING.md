@@ -31,6 +31,6 @@ where the slug is an appropriate link to your lesson. Example [.md](https://gith
 ```
 - title: 'EXAMPLE TITLE'
   description: 'Example description.'
-  extraLesson: bool
+  extraLesson: true
 ```
-where the title name matches exactly with the one found in your markdown file. Additionally, provide a short 1-2 sentence summary of your lesson with the description argument. The extraLesson argument is optional; only use it if your lesson is not part of the curriculum and is considered an extra one. After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.
+where the title name matches exactly with the one found in your markdown file. Additionally, provide a short 1-2 sentence summary of your lesson with the description argument. After that, submit a pull request mentioning what you added in your lesson and tag your pull request with the "new lesson" tag.
