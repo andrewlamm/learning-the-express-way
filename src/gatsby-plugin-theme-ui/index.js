@@ -14,11 +14,11 @@ const theme = {
   colors: {
     text: '#000000',
     background: '#ffffff',
-    primary: '#e5989b',
+    primary: '#f38472', // '#e5989b',
     accent: '#6d6875',
-    highlight: '#f0dbdc',
+    highlight: '#ffd1c2',
     headingbg: '#f8f8f8',
-    heading: '#941b0c', // '#a9707b',
+    heading: '#be0100', //'#941b0c', // '#a9707b',
     sidebar: '#f2f2f2',
     boxoutline: '#cccccc',
 
@@ -52,7 +52,7 @@ const theme = {
       fontFamily: 'body',
       fontSize: '20px',
       fontWeight: 600,
-      color: '#98646e',
+      color: 'heading',
     },
     h3: {
       marginTop: 3,

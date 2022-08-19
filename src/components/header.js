@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
 import { jsx, Box, Flex, Button, Input } from 'theme-ui'
-import { FaCaretDown, FaCaretUp, FaBook, FaSearch } from 'react-icons/fa'
+import { FaCaretDown, FaCaretUp, FaBook, FaSearch, FaBookOpen } from 'react-icons/fa'
 import { TbMap2 } from 'react-icons/tb'
 import { BsPeopleFill } from 'react-icons/bs'
 import { Global } from '@emotion/core'
@@ -110,7 +110,7 @@ const Header = ({ ...props }) => {
           flexDirection: 'row',
           alignItems: 'center',
           position: 'relative',
-          zIndex: 0,
+          zIndex: 2,
           fontFamily: 'heading',
       }}
       id="header"
@@ -156,7 +156,7 @@ const Header = ({ ...props }) => {
             bg: '#000000',
           }}
         >
-          Learning the Express Way
+          Express
         </Link>
       </Box>
       <Hamburger // Mobile only
@@ -299,7 +299,7 @@ const Header = ({ ...props }) => {
             ))}
           </Box>
         </Box>
-        {/* <Box
+        <Box
           sx={{
             position: 'relative',
             marginRight: ['32px', null, '40px'],
@@ -326,7 +326,7 @@ const Header = ({ ...props }) => {
             onClick={ () => setExtraDropdown(!extraDropdown) }
             id="extraLessonDropdown"
           >
-            <FaBook size='20px' sx={{paddingRight: '5px'}} />
+            <FaBookOpen size='24px' sx={{paddingRight: '5px'}} />
             Extras
             {!extraDropdown && <FaCaretDown size='1rem' sx={{paddingLeft: 2}} />}
             {extraDropdown && <FaCaretUp size='1rem' sx={{paddingLeft: 2}} />}
@@ -372,7 +372,7 @@ const Header = ({ ...props }) => {
               </Link>
             ))}
           </Box>
-        </Box> */}
+        </Box>
         <Box
           sx={{
             fontSize: 3,

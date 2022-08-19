@@ -32,6 +32,32 @@ const SectionText = ({ heading, children, ...props}) => {
   )
 }
 
+const AuthorSpiel = ({ children, ...props }) => {
+  return (
+    <Flex
+      sx={{
+        flexDirection: 'row',
+        width: '100%',
+      }}
+    >
+      {/* <Box
+        sx={{
+          mx: 1,
+        }}
+      >
+        // use for image
+      </Box> */}
+      <Box
+        sx={{
+          mx: 1,
+        }}
+      >
+        {children}
+      </Box>
+    </Flex>
+  )
+}
+
 const ContributingHeading = ({ children, ...props }) => {
   return (
     <Box
@@ -149,9 +175,12 @@ const ContributingPage = () => {
         >
           Authors
         </ContributingHeading>
-        <Box>
-          nom
-        </Box>
+        <AuthorSpiel>
+          <b>Andrew Lam</b>
+        </AuthorSpiel>
+        <AuthorSpiel>
+          <b>Aileen Guo</b>
+        </AuthorSpiel>
       </Box>
     </Flex>
   )
