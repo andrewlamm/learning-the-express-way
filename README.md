@@ -1,4 +1,4 @@
-# Learning the Expres Way
+# Learning the Express Way
 
 ## Learn web development quickly and easily.
 

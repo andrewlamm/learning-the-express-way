@@ -38,6 +38,16 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
   })
 
   let lessonNumber = 1
+  let lessonIsExtra = false
+
+  lessons.forEach(lesson => {
+    if (lesson.title === lessonTitle) {
+      if (lesson.extraLesson)
+        lessonIsExtra = true
+    }
+  })
+
+  const tocLessonList = lessons.filter(lesson => (lesson.extraLesson === lessonIsExtra || (!lessonIsExtra && lesson.extraLesson === null)))
 
   return (
     <Box {...props}
@@ -45,7 +55,7 @@ const TableOfContents = ({ items, lessonTitle, ...props }) => {
         marginTop: '10px',
       }}
     >
-      {lessons.map((lesson, i) => (
+      {tocLessonList.map((lesson, i) => (
         <Box
           key={i}
           sx={{
